@@ -1,0 +1,17 @@
+
+.blue-nav a{
+    color: aliceblue;
+}
+.blue-nav a:active{
+    background-color: aliceblue;
+    color: #0d6efd;
+    animation: pulse; 
+    animation-duration: 1s;
+}
+
+.blue-nav a:hover{
+    background-color: aliceblue;
+    color: #0d6efd;
+    animation: pulse; 
+    animation-duration: 1s;
+}

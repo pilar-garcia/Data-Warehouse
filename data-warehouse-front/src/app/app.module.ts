@@ -6,17 +6,23 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { HeaderComponent } from './header/header.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdSortableHeader } from './contacts/sortable.directive';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     ContactsComponent,
-    HeaderComponent
+    HeaderComponent,
+    NgbdSortableHeader
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

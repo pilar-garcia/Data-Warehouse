@@ -1,0 +1,8 @@
+main {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+.container-mio {
+    flex: 1;    /* same as flex-grow: 1; */
+}
