@@ -21,7 +21,7 @@ interface State {
   sortDirection: SortDirection;
 }
 
-const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+const compare = (v1: string | number | boolean, v2: string | number | boolean) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 function sort(countries: Contact[], column: SortColumn, direction: string): Contact[] {
   if (direction === '' || column === '') {

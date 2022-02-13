@@ -4,4 +4,5 @@ export interface Contact {
     flag: string;
     area: number;
     population: number;
+    checked: boolean;
   }

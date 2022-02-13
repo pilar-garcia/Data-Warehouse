@@ -1,70 +1,116 @@
-<!--
-
-    <section id="contacts">
-        <div class="d-flex justify-content-center">
-            <h2> Contactos </h2>
-        </div>
-        <section class="d-flex flex-row justify-content-between">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Buscar</button>
-            </form>
-            <form class="d-flex">
-                <button type="button" class="btn btn-light">Exportar</button>
-                <button type="button" class="btn btn-light">Importar Contactos</button>
-                <button type="button" class="btn btn-primary">Agregar contacto</button>
-            </form>
-        </section>
+<section id="contacts">
+  <form>
+    <div class="d-flex justify-content-center">
+        <h2> Contactos </h2>
+    </div>
+    <section class="d-flex flex-row justify-content-between">
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" name ="searchTerm" placeholder="Buscar" aria-label="Search" [(ngModel)]="service.searchTerm">  
+        </form>
+        <span class="ml-3 btn btn-outline-primary" *ngIf="service.loading$ | async">Loading...</span>
+        <form class="d-flex">
+            <button type="button" class="btn btn-outline-primary">
+              <i class="bi bi-cloud-arrow-up-fill"></i> Importar
+            </button>
+            <button type="button" class="btn btn-outline-primary">
+              <i class="bi bi-cloud-arrow-down-fill"></i> Exportar
+            </button>
+            <button type="button" class="btn btn-primary" (click)="openModal()">
+              <i class="bi bi-cloud-plus-fill"></i> Agregar contacto
+            </button>
+        </form>
     </section>
--->
 
-<p>This is a more complete example with a service that simulates server calling:</p>
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle"> <i class="bi bi-cloud-plus-fill"></i> Agregar contacto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseHandled()"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="input-group">
+                <span class="input-group-text">Nombre</span>
+                <input type="text" aria-label="Nombre" class="form-control">
+                <span class="input-group-text">Apellido</span>
+                <input type="text" aria-label="Apellido" class="form-control">
+                <span class="input-group-text">Cargo</span>
+                <input type="text" aria-label="Cargo" class="form-control">
+                <span class="input-group-text">Email</span>
+                <input type="text" aria-label="Email" class="form-control">
+                <span class="input-group-text">Compañía</span>
+                <input type="text" aria-label="Compañía" class="form-control">
+              </div>
+              <div class="input-group">
+                <span class="input-group-text">Región</span>
+                <input type="text" aria-label="Región" class="form-control">
+                <span class="input-group-text">País</span>
+                <input type="text" aria-label="País" class="form-control">
+                <span class="input-group-text">Ciudad</span>
+                <input type="text" aria-label="Ciudad" class="form-control">
+                <span class="input-group-text">Dirección</span>
+                <input type="text" aria-label="Dirección" class="form-control">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCloseHandled()">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<ul>
-  <li>an observable async service to fetch a list of countries</li>
-  <li>sorting, filtering and pagination</li>
-  <li>simulated delay and loading indicator</li>
-  <li>debouncing of search requests</li>
-</ul>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="checkAllContactsModel" 
+          (change)="checkAllContacts()" [ngModelOptions]="{standalone: true}" id="checkAllContacts">
+        </th>
+        <th scope="col" sortable="name" (sort)="onSort($event)">
+          Contacto <i class="bi bi-arrow-down-up" *ngIf="sortedElement != 'name'" ></i>
+          <i class="bi bi-arrow-down" *ngIf="sortedElement == 'name' && sortedDirection == 'desc' "></i>
+          <i class="bi bi-arrow-up" *ngIf="sortedElement == 'name' && sortedDirection == 'asc' "></i>
+        </th>
+        <th scope="col" sortable="area" (sort)="onSort($event)">País/Región 
+          <i class="bi bi-arrow-down-up" *ngIf="sortedElement != 'area'" ></i>
+          <i class="bi bi-arrow-down" *ngIf="sortedElement == 'area' && sortedDirection == 'desc' "></i>
+          <i class="bi bi-arrow-up" *ngIf="sortedElement == 'area' && sortedDirection == 'asc' "></i>
+        </th>
+        <th scope="col" sortable="population" (sort)="onSort($event)">Compañía 
+          <i class="bi bi-arrow-down-up" *ngIf="sortedElement != 'population'" ></i>
+          <i class="bi bi-arrow-down" *ngIf="sortedElement == 'population' && sortedDirection == 'desc' "></i>
+          <i class="bi bi-arrow-up" *ngIf="sortedElement == 'population' && sortedDirection == 'asc' "></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let country of countries$ | async; index as i">
+        <th scope="row"><input class="form-check-input" type="checkbox" [(ngModel)]="country.checked" [ngModelOptions]="{standalone: true}" id="{{'checkContact'+i}}"></th>
+        <td>
+          <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
+          <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+        <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td>
+        <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td>
+      </tr>
+      </tbody>
+    </table>
+  
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination
+        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+      </ngb-pagination>
+  
+      <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+        <option [ngValue]="2">2 Contactos por página</option>
+        <option [ngValue]="4">4 Contactos por página</option>
+        <option [ngValue]="6">6 Contactos por página</option>
+      </select>
+    </div>
+  
+  </form>
+</section>
 
-<form>
-  <div class="form-group form-inline">
-      Full text search: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"/>
-      <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
-  </div>
-
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col" sortable="name" (sort)="onSort($event)">Country</th>
-      <th scope="col" sortable="area" (sort)="onSort($event)">Area</th>
-      <th scope="col" sortable="population" (sort)="onSort($event)">Population</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let country of countries$ | async">
-      <th scope="row">{{ country.id }}</th>
-      <td>
-        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-        <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
-      </td>
-      <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td>
-      <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td>
-    </tr>
-    </tbody>
-  </table>
-
-  <div class="d-flex justify-content-between p-2">
-    <ngb-pagination
-      [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
-    </ngb-pagination>
-
-    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
-      <option [ngValue]="2">2 items per page</option>
-      <option [ngValue]="4">4 items per page</option>
-      <option [ngValue]="6">6 items per page</option>
-    </select>
-  </div>
-
-</form>
