@@ -1,5 +1,6 @@
 #contacts{
     min-height: 91vh;
+    background-color: #0d6efd1f;
 }
 
 button{
@@ -25,4 +26,18 @@ button{
     min-height: 38px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+}
+
+.progress-bar-container:hover{
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.flex-form{
+    display: flex;
+    align-items: self-start;
 }
