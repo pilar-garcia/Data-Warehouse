@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdSortableHeader } from './contacts/sortable.directive';
 import { FormsModule } from '@angular/forms';
 import { PopupComponent } from './popup/popup.component';
+import { NgpImagePickerModule } from 'ngp-image-picker';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PopupComponent } from './popup/popup.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    NgpImagePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import {Contact} from './contact';
 import {CountryService} from './contact.service';
 import {NgbdSortableHeader, SortEvent} from './sortable.directive';
+import { ImagePickerConf } from 'ngp-image-picker';
 
 @Component({
   selector: 'app-contacts',
@@ -23,6 +24,13 @@ export class ContactsComponent implements OnInit {
   checkAllContactsModel: boolean;
   displayNewContact = "none";
   displayMoreActions = "none";
+
+  imagePickerConf: ImagePickerConf = {
+    borderRadius: '4px',
+    language: 'en',
+    width: '180px',
+    height: '120px',
+  };
 
   openModal() {
     this.displayNewContact = "flex";
@@ -84,6 +92,10 @@ export class ContactsComponent implements OnInit {
       })
     ).subscribe();
     
+  }
+
+  onImageChange(value: any): void{
+    console.log(value);
   }
 
 }

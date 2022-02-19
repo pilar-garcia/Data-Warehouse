@@ -29,10 +29,7 @@
     <app-popup [title]="'Agregar contacto'" [display]="displayNewContact" (popupClose)="onCloseHandled('newContact')">
       <form class="flex-form"> 
         <div class="input-group">
-          <picture>
-            <source srcset="..." type="image/svg+xml">
-            <img src="..." class="img-fluid img-thumbnail" alt="...">
-          </picture>
+          <ngp-image-picker [_config]="imagePickerConf" ($imageChanged)="onImageChange($event)"></ngp-image-picker>
         </div>
         <div class="input-group">
           <div class="form-floating mb-3">
