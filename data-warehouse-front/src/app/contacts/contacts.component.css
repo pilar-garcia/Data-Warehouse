@@ -28,3 +28,12 @@ button{
 .input-group{
     margin-bottom: 10px;
 }
+
+.action-item{
+    text-align: center;
+    cursor: pointer;
+}
+
+.action-item:hover{
+    background-color: aliceblue;
+}

@@ -89,6 +89,9 @@
           <i class="bi bi-arrow-down" *ngIf="sortedElement == 'population' && sortedDirection == 'desc' "></i>
           <i class="bi bi-arrow-up" *ngIf="sortedElement == 'population' && sortedDirection == 'asc' "></i>
         </th>
+        <th scope="col" class="action-item"> 
+           acciones
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -100,6 +103,7 @@
         </td>
         <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td>
         <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td>
+        <td class="action-item"><ngb-highlight [result]="'...'"></ngb-highlight></td>
       </tr>
       </tbody>
     </table>
