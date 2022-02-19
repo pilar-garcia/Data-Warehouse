@@ -7,28 +7,6 @@ button{
     margin: 5px;
 }
 
-.modal-dialog{
-    max-width: 80%;
-}
-
-.modal-header {
-    background-color: #0d6efd99;
-}
-
-.modal-footer {
-    background-color: #0d6efd99;
-}
-
-.modal{
-    justify-content: center;
-    align-items: center;
-    background-color: #708090e6;
-}
-
-.input-group{
-    margin-bottom: 10px;
-}
-
 .action-item{
     text-align: center;
     cursor: pointer;
@@ -36,4 +14,15 @@ button{
 
 .action-item:hover{
     background-color: aliceblue;
+}
+
+.progress-bar{
+    min-width: 181px;
+    background-color: #e9ecef;
+}
+
+.progress-bar-container{
+    min-height: 38px;
+    display: flex;
+    align-items: center;
 }

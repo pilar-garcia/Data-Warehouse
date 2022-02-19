@@ -26,46 +26,68 @@
         </form>
     </section>
 
-    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle"> <i class="bi bi-cloud-plus-fill"></i> Agregar contacto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseHandled()"></button>
+    <app-popup [title]="'Agregar contacto'" [display]="displayNewContact" (popupClose)="onCloseHandled('newContact')">
+      <form> 
+        <div class="input-group">
+          
+        </div> 
+        <div class="input-group">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="Pilar">
+            <label for="floatingInput">Nombre</label>
           </div>
-          <div class="modal-body">
-            <form>
-              <div class="input-group">
-                <span class="input-group-text">Nombre</span>
-                <input type="text" aria-label="Nombre" class="form-control">
-                <span class="input-group-text">Apellido</span>
-                <input type="text" aria-label="Apellido" class="form-control">
-                <span class="input-group-text">Cargo</span>
-                <input type="text" aria-label="Cargo" class="form-control">
-                <span class="input-group-text">Email</span>
-                <input type="text" aria-label="Email" class="form-control">
-                <span class="input-group-text">Compañía</span>
-                <input type="text" aria-label="Compañía" class="form-control">
-              </div>
-              <div class="input-group">
-                <span class="input-group-text">Región</span>
-                <input type="text" aria-label="Región" class="form-control">
-                <span class="input-group-text">País</span>
-                <input type="text" aria-label="País" class="form-control">
-                <span class="input-group-text">Ciudad</span>
-                <input type="text" aria-label="Ciudad" class="form-control">
-                <span class="input-group-text">Dirección</span>
-                <input type="text" aria-label="Dirección" class="form-control">
-              </div>
-            </form>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="Garcia">
+            <label for="floatingInput">Apellido</label>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCloseHandled()">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="Developer">
+            <label for="floatingInput">Cargo</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="pilargarcia@example.com">
+            <label for="floatingInput">Email</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="acamica">
+            <label for="floatingInput">Compañía</label>
           </div>
         </div>
+        <div class="input-group">
+          <div class="mb-3">
+            <label for="region" class="form-label">Región</label>
+            <input type="text" class="form-control" id="region">
+          </div>
+          <div class="mb-3">
+            <label for="pais" class="form-label">País</label>
+            <input type="text" class="form-control" id="pais">
+          </div>
+          <div class="mb-3">
+            <label for="ciudad" class="form-label">Ciudad</label>
+            <input type="text" class="form-control" id="ciudad">
+          </div>
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion">
+          </div>
+          <div class="mb-3">
+            <label for="interes" class="form-label">Interés</label>
+            <div class="form-control progress-bar-container"><ngb-progressbar class="progress-bar" type="success" textType="white" [value]="25" [showValue]="true"></ngb-progressbar></div>
+          </div>
+        </div>
+      </form>
+    </app-popup>
+
+    <app-popup [title]="'Acciones'" [icon]="'bi bi-command'" [showConfirm]="false" [display]="displayMoreActions" (popupClose)="onCloseHandled('moreActions')">
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-primary">
+          <i class="bi bi-trash"></i> Eliminar
+        </button>
+        <button type="button" class="btn btn-outline-primary">
+          <i class="bi bi-pencil"></i> Editar
+        </button>
       </div>
-    </div>
+    </app-popup>
 
     <table class="table table-striped">
       <thead>
@@ -103,7 +125,7 @@
         </td>
         <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td>
         <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td>
-        <td class="action-item"><ngb-highlight [result]="'...'"></ngb-highlight></td>
+        <td class="action-item" (click)="showMoreActions()"><ngb-highlight [result]="'...'"></ngb-highlight></td>
       </tr>
       </tbody>
     </table>

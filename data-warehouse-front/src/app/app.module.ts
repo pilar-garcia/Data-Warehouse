@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdSortableHeader } from './contacts/sortable.directive';
 import { FormsModule } from '@angular/forms';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     ContactsComponent,
     HeaderComponent,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

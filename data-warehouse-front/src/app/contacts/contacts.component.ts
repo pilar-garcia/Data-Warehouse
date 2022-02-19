@@ -21,12 +21,24 @@ export class ContactsComponent implements OnInit {
   sortedElement: string;
   sortedDirection: string;
   checkAllContactsModel: boolean;
-  display = "none";
-openModal() {
-    this.display = "flex";
+  displayNewContact = "none";
+  displayMoreActions = "none";
+
+  openModal() {
+    this.displayNewContact = "flex";
   }
-  onCloseHandled() {
-    this.display = "none";
+
+  onCloseHandled(display: string) {
+    if(display === 'newContact'){
+      this.displayNewContact = "none";
+    }
+    if(display === 'moreActions'){
+      this.displayMoreActions = "none";
+    }
+  }
+
+  showMoreActions(){
+    this.displayMoreActions = 'flex';
   }
 
 
