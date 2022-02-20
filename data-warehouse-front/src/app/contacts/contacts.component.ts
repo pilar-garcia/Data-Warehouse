@@ -26,10 +26,10 @@ export class ContactsComponent implements OnInit {
   displayMoreActions = "none";
 
   imagePickerConf: ImagePickerConf = {
-    borderRadius: '4px',
+    borderRadius: '50%',
     language: 'en',
     width: '180px',
-    height: '120px',
+    height: '180px',
   };
 
   openModal() {

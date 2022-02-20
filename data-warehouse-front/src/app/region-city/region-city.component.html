@@ -1,0 +1,28 @@
+<section class="d-flex flex-column align-items-center">
+  <h2>Región/Ciudad</h2>
+  <ul id="myUL">
+    <li class="region" *ngFor="let region of regions; index as i" ><span [class.caret-down]="region.opened" class="caret" (click)="region.opened = !region.opened"> {{region.name}} </span>
+      <ul [class.active]="region.opened" class="nested">
+        <li class="country" *ngFor="let country of region.countries; index as y"><span [class.caret-down]="country.opened" class="caret" (click)="country.opened = !country.opened">{{country.name}}</span>
+          <ul  [class.active]="country.opened" class="nested">
+            <li *ngFor="let city of country.cities; index as z">{{city.name}}</li>
+            <li class="add" (click)="showAgregar('ciudad')"> <i class="bi bi-plus-square-fill"></i> Agregar ciudad</li>
+          </ul>
+        </li>
+        <li class="add" (click)="showAgregar('pais')"> <i class="bi bi-plus-square-fill"></i> Agregar país </li>
+      </ul>
+    </li>
+    <li class="add" (click)="showAgregar('region')" > <i class="bi bi-plus-square-fill"></i> Agregar región</li>
+  </ul>
+</section>
+
+<app-popup [title]="title" [icon]="'bi bi-command'" [showConfirm]="true" [display]="displayAgregar" (popupClose)="onCloseHandled(id)">
+  <form class="d-flex justify-content-between">
+    <div class="input-group">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="inputRegion" placeholder="Bogota">
+        <label for="inputRegion">Nombre</label>
+      </div>
+    </div>
+  </form>
+</app-popup>

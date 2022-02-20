@@ -11,6 +11,7 @@ import { NgbdSortableHeader } from './contacts/sortable.directive';
 import { FormsModule } from '@angular/forms';
 import { PopupComponent } from './popup/popup.component';
 import { NgpImagePickerModule } from 'ngp-image-picker';
+import { RegionCityComponent } from './region-city/region-city.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgpImagePickerModule } from 'ngp-image-picker';
     ContactsComponent,
     HeaderComponent,
     NgbdSortableHeader,
-    PopupComponent
+    PopupComponent,
+    RegionCityComponent
   ],
   imports: [
     BrowserModule,
