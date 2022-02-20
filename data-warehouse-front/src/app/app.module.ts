@@ -8,10 +8,11 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdSortableHeader } from './contacts/sortable.directive';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopupComponent } from './popup/popup.component';
 import { NgpImagePickerModule } from 'ngp-image-picker';
 import { RegionCityComponent } from './region-city/region-city.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +22,15 @@ import { RegionCityComponent } from './region-city/region-city.component';
     HeaderComponent,
     NgbdSortableHeader,
     PopupComponent,
-    RegionCityComponent
+    RegionCityComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     NgpImagePickerModule
   ],
   providers: [],

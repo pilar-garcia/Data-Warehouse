@@ -23,3 +23,12 @@
     animation-duration: 1s;
 }
 
+.logout{
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.logout:hover{
+    color:crimson;
+    background-color: aliceblue;
+}
