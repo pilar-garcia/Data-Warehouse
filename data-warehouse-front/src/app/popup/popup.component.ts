@@ -13,6 +13,7 @@ export class PopupComponent implements OnInit {
   @Input() showConfirm = true;
 
   @Output() popupClose = new EventEmitter<string>();
+  @Output() popupSaved = new EventEmitter<string>();
 
   constructor() { }
 
@@ -22,6 +23,11 @@ export class PopupComponent implements OnInit {
   onCloseHandled(): void {
     this.display = 'none';
     this.popupClose.emit();
+  }
+
+  onSaved(): void {
+    this.display = 'none';
+    this.popupSaved.emit();
   }
 
 }

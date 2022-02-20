@@ -12,6 +12,9 @@ export class RegionCityComponent implements OnInit {
   displayAgregar = 'none';
   title='';
   id='';
+  inputName='';
+  regionSelected=0;
+  countrySelected=0;
   regions: Region[] = [
     {
       id: 1,
@@ -91,8 +94,32 @@ export class RegionCityComponent implements OnInit {
     this.displayAgregar = "none";
   }
 
-  showAgregar(index: string){
-    switch(index){
+  save(type: string){
+    switch(type){
+      case 'region':
+        this.regions.push({id: this.regions.length+1, name: this.inputName, countries:[], opened: false});
+        break;
+      case 'pais':
+          this.regions[this.regionSelected].countries.push({id: this.regions[this.regionSelected].countries.length+1, name: this.inputName, cities:[], opened: false});
+          break;
+      case 'ciudad':
+        this.regions[this.regionSelected].countries[this.countrySelected].cities.push({id: this.regions.length+1, name: this.inputName, opened: false});
+      break;
+    
+    }
+    
+    this.id='';
+    this.title= '';
+    this.displayAgregar = "none";
+    this.countrySelected = 0;
+    this.regionSelected = 0;
+    this.inputName = '';
+  }
+
+  showAgregar(regionSelected: number, countrySelected: number,type: string){
+    this.regionSelected = regionSelected;
+    this.countrySelected = countrySelected;
+    switch(type){
       case 'region':
         this.id='region';
         this.title= 'Agregar región';
