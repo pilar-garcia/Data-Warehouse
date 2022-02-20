@@ -13,12 +13,10 @@ export class LoginService {
 
   login(user: User): void{
     this.user.next(user);
-    localStorage.setItem('user',JSON.stringify(user));
   }
 
   logout(){
     this.user.next({email: '', password: ''});
-    localStorage.removeItem('user');
   }
 
 }

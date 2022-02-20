@@ -4,6 +4,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { LoginGuardGuard } from './login-guard.guard';
 import { LoginComponent } from './login/login.component';
 import { RegionCityComponent } from './region-city/region-city.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,9 @@ const routes: Routes = [
   },
   {
     path: 'login', component: LoginComponent,
+  },
+  {
+    path: 'register', component: UsersComponent,
   },
   { path: '',   redirectTo: '/login', pathMatch: 'full' }
 ];

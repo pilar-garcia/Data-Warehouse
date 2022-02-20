@@ -13,6 +13,7 @@ import { PopupComponent } from './popup/popup.component';
 import { NgpImagePickerModule } from 'ngp-image-picker';
 import { RegionCityComponent } from './region-city/region-city.component';
 import { LoginComponent } from './login/login.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LoginComponent } from './login/login.component';
     NgbdSortableHeader,
     PopupComponent,
     RegionCityComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

@@ -13,12 +13,7 @@ export class HeaderComponent implements OnInit {
   userName = '';
   logged = false;
 
-  constructor( private router: Router, private loginService: LoginService) { 
-    let user = localStorage.getItem('user');
-    if(user != null){
-      this.logged = true;
-      this.userName = (JSON.parse(user)).email;
-    }
+  constructor( private router: Router, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
@@ -26,6 +21,7 @@ export class HeaderComponent implements OnInit {
         this.userName = user.email;
         if(user.email === ''){
           this.logged = false;
+          this.userName = '';
         } else {
           this.logged = true;
         }

@@ -28,9 +28,6 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    if(localStorage.getItem('user')){
-      this.router.navigateByUrl('/contacts');
-    }
   }
 
   get controls() {
