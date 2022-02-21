@@ -31,9 +31,6 @@ export class LoginComponent implements OnInit {
   }
 
   get controls() {
-    if( this.form === undefined){
-      return null;
-    } 
     return this.form.controls; 
   }
 

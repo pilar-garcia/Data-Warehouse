@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CompaniesComponent } from './companies/companies.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { LoginGuardGuard } from './login-guard.guard';
 import { LoginComponent } from './login/login.component';
@@ -12,6 +13,9 @@ const routes: Routes = [
   },
   {
     path: 'region', component: RegionCityComponent, canActivate: [LoginGuardGuard],
+  },
+  {
+    path: 'companies', component: CompaniesComponent, canActivate: [LoginGuardGuard],
   },
   {
     path: 'login', component: LoginComponent,

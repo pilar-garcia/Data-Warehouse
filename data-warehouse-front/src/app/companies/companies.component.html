@@ -1,0 +1,36 @@
+<section class="company d-flex  justify-content-center align-items-center">
+    <form class="d-flex"  [formGroup]="form" (ngSubmit)="addCompany()">
+        
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="name">
+            <label for="name">Nombre</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="country" id="country" placeholder="Colombia">
+            <label for="country">País</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="address" id="address" placeholder="#3253">
+            <label for="address">Dirección</label>
+        </div>
+        <div class="form-floating mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+    </form>
+</section>
+<section class="d-flex justify-content-center align-items-center">
+    <div class="tb d-flex flex-column">
+        <div class="header d-flex">
+            <div class="th">Nombre</div>
+            <div class="th">País</div>
+            <div class="th">Dirección</div>
+            <div class="th">Acciones</div>
+        </div>
+        <div *ngFor="let company of companies; index as i" class="data d-flex">
+            <div class="rw"> {{company.name}} </div>
+            <div class="rw"> {{company.country}} </div>
+            <div class="rw"> {{company.address}} </div>
+            <div class="rw">Editar | Eliminar</div>
+        </div>
+    </div>
+</section>

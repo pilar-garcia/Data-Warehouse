@@ -14,6 +14,7 @@ import { NgpImagePickerModule } from 'ngp-image-picker';
 import { RegionCityComponent } from './region-city/region-city.component';
 import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
+import { CompaniesComponent } from './companies/companies.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UsersComponent } from './users/users.component';
     PopupComponent,
     RegionCityComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    CompaniesComponent
   ],
   imports: [
     BrowserModule,
