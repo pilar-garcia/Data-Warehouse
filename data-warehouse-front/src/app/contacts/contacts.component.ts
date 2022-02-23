@@ -13,6 +13,9 @@ import { Region } from '../region-city/region';
 import { RegionsService } from '../region-city/regions.service';
 import { Country } from '../region-city/country';
 import { City } from '../region-city/city';
+import { ContactApiService } from './contact-api.service';
+import { CompanyService } from '../companies/company.service';
+import { Company } from '../companies/company';
 
 @Component({
   selector: 'app-contacts',
@@ -30,6 +33,7 @@ export class ContactsComponent implements OnInit {
   displayNewContact = "none";
   displayMoreActions = "none";
   interes: number = 0;
+  companies: Company[] = [];
 
   selectedRegion: Region = {id: 0, name:'', countries: [], opened: false};
   selectedCountry: Country = {id: 0, name:'', cities: [], opened: false};
@@ -67,15 +71,23 @@ export class ContactsComponent implements OnInit {
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>|undefined;
 
-  constructor(public service: CountryService, private formBuilder: FormBuilder, private regionService: RegionsService) {
+  constructor(public service: CountryService, private formBuilder: FormBuilder,
+     private regionService: RegionsService, private contactApi: ContactApiService,
+     private companyService: CompanyService) {
     this.countries$ = service.countries$;
     this.total$ = service.total$;
     this.sortedElement = '';
     this.sortedDirection = '';
     this.checkAllContactsModel = false;
     this.formContact = this.formBuilder.group({
+      inputName: ['', Validators.required],
+      inputLastName: ['', Validators.required],
+      inputRole: ['', Validators.required],
+      inputEmail: ['', Validators.required],
+      inputCompany: ['', Validators.required],
       region: ['', Validators.required],
       country: ['', Validators.required],
+      address: ['', Validators.required],
       city: ['', Validators.required]
     });
     this.formChannel = this.formBuilder.group({
@@ -87,8 +99,14 @@ export class ContactsComponent implements OnInit {
 
   ngOnInit(): void {
     this.formContact = this.formBuilder.group({
+      inputName: ['', Validators.required],
+      inputLastName: ['', Validators.required],
+      inputRole: ['', Validators.required],
+      inputEmail: ['', Validators.required],
+      inputCompany: ['', Validators.required],
       region: ['', Validators.required],
       country: ['', Validators.required],
+      address: ['', Validators.required],
       city: ['', Validators.required]
     });
     this.formChannel = this.formBuilder.group({
@@ -97,8 +115,8 @@ export class ContactsComponent implements OnInit {
       preference: ['', Validators.required]
     });
     this.getRegions();
+    this.getCompanies();
     this.controls['region'].valueChanges.subscribe(val => {
-      console.log(val);
       this.openRegion(val);
     });
     this.controls['country'].valueChanges.subscribe(val => {
@@ -193,4 +211,41 @@ export class ContactsComponent implements OnInit {
       this.interes += 25;
     }
   }
+
+  saveContact(){
+    if(this.controls != null && this.formContact.valid){
+      let contact = {
+        name: this.controls['inputName'].value,
+        lastName: this.controls['inputLastName'].value,
+        email: this.controls['inputEmail'].value,
+        position: this.controls['inputRole'].value,
+        address: this.controls['address'].value,
+        cityId: this.controls['city'].value,
+        companyId: this.controls['inputCompany'].value,
+        interes: this.interes+'', 
+        channels: this.channels,      
+      }
+      this.contactApi.postContact(contact).then(value => {
+        value.subscribe(contact =>{
+          this.formContact.reset();
+          this.interes = 0;
+          this.channels = [];
+          this.getContacts();
+        });
+      });
+    }
+  }
+
+  getContacts(){
+    
+  }
+
+  getCompanies(): void {
+    this.companyService.getCompanies().then((value: Observable<Company[]>) =>{
+      value.subscribe((companies: Company[]) =>{
+          this.companies = companies;
+      });
+    });
+  }
+
 }

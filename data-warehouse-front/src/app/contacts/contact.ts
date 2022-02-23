@@ -2,11 +2,15 @@ export interface Contact {
     id: number;
     name: string;
     photo: string;
-    lastname: string;
+    lastName: string;
     position: string;
+    address: string;
     email: string;
-    city: string;
-    company: string;
+    cityId: number;
+    interes: string;
+    companyId: number;
+    company: Field,
+    city: Field,
     channels: Channel[];
     checked: boolean;
   }
@@ -16,3 +20,8 @@ export interface Channel {
     value: string;
     preference: string;
   }
+
+  export interface Field {
+    name: string;
+  }
+
