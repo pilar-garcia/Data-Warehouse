@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { City } from './city';
+import { Country } from './country';
 import { Region } from './region';
+import { RegionsService } from './regions.service';
 
 @Component({
   selector: 'app-region-city',
@@ -15,77 +19,48 @@ export class RegionCityComponent implements OnInit {
   inputName='';
   regionSelected=0;
   countrySelected=0;
-  regions: Region[] = [
-    {
-      id: 1,
-      name: 'Sudamerica',
-      opened: false,
-      countries: [
-        {
-          id: 1,
-          name: 'Colombia',
-          opened: false,
-          cities: [
-            {
-              id: 1,
-              name: 'Armenia',
-              opened: false
-            },
-            {
-              id: 1,
-              name: 'Bogota',
-              opened: false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 1,
-      name: 'Norteamerica',
-      opened: false,
-      countries: [
-        {
-          id: 1,
-          name: 'Canada',
-          opened: false,
-          cities: [
-            {
-              id: 1,
-              name: 'Montreal',
-              opened: false
-            },
-            {
-              id: 1,
-              name: 'Toronto',
-              opened: false
-            }
-          ]
-        },
-        {
-          id: 1,
-          name: 'Mexico',
-          opened: false,
-          cities: [
-            {
-              id: 1,
-              name: 'Monterrey',
-              opened: false
-            },
-            {
-              id: 1,
-              name: 'Cancun',
-              opened: false
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  regions: Region[] = [];
 
-  constructor() { }
+  constructor(private regionService: RegionsService) { }
 
   ngOnInit(): void {
+    this.getRegions();
+  }
+
+  getRegions(): void {
+    this.regionService.getRegions().then((value: Observable<Region[]>) =>{
+      value.subscribe((regions: Region[]) =>{
+          regions.forEach(region => {
+            region.countries = []
+          });
+          this.regions = regions;
+      });
+    });
+  }
+
+  openRegion(i: number){
+    this.regions[i].opened = !this.regions[i].opened;
+    if(this.regions[i].opened){
+      this.regionService.getCountriesByRegion(this.regions[i].id).then((value: Observable<Country[]>) =>{
+        value.subscribe((countries: Country[]) =>{
+          countries.forEach(country => {
+            country.cities = []
+          });
+          this.regions[i].countries = countries;
+        });
+      });
+    }
+  }
+
+  openCountry(i: number, y: number){
+    this.regions[i].countries[y].opened = !this.regions[i].countries[y].opened;
+    if(this.regions[i].countries[y].opened){
+      this.regionService.getCitiesByCountry(this.regions[i].countries[y].id).then((value: Observable<City[]>) =>{
+        value.subscribe((cities: City[]) =>{
+          this.regions[i].countries[y].cities = cities;
+        });
+      });
+    }
   }
 
   onCloseHandled(display: string) {
@@ -97,13 +72,29 @@ export class RegionCityComponent implements OnInit {
   save(type: string){
     switch(type){
       case 'region':
-        this.regions.push({id: this.regions.length+1, name: this.inputName, countries:[], opened: false});
+        this.regionService.postRegion(this.inputName).then((value: Observable<Region>) =>{
+          value.subscribe((region: Region) =>{
+            region.countries = [];
+            this.regions.push(region);
+          });
+        });
         break;
       case 'pais':
-          this.regions[this.regionSelected].countries.push({id: this.regions[this.regionSelected].countries.length+1, name: this.inputName, cities:[], opened: false});
+          this.regionService.postCountry(this.inputName, this.regions[this.regionSelected].id).then((value: Observable<Country>) =>{
+            value.subscribe((country: Country) =>{
+              this.regions[this.regionSelected].countries.push(country);
+              this.regionSelected = 0;
+            });
+          });
           break;
       case 'ciudad':
-        this.regions[this.regionSelected].countries[this.countrySelected].cities.push({id: this.regions.length+1, name: this.inputName, opened: false});
+        this.regionService.postCity(this.inputName, this.regions[this.countrySelected].id).then((value: Observable<City>) =>{
+          value.subscribe((city: City) =>{
+            this.regions[this.regionSelected].countries[this.countrySelected].cities.push(city);
+            this.regionSelected = 0;
+            this.countrySelected = 0;
+          });
+        });
       break;
     
     }
@@ -111,8 +102,6 @@ export class RegionCityComponent implements OnInit {
     this.id='';
     this.title= '';
     this.displayAgregar = "none";
-    this.countrySelected = 0;
-    this.regionSelected = 0;
     this.inputName = '';
   }
 

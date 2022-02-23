@@ -18,8 +18,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginService.user.subscribe(user =>{
-        this.userName = user.email;
-        if(user.email === ''){
+        this.userName = user.data;
+        if(user.data === ''){
           this.logged = false;
           this.userName = '';
         } else {

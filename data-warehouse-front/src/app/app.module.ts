@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -15,6 +17,7 @@ import { RegionCityComponent } from './region-city/region-city.component';
 import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
 import { CompaniesComponent } from './companies/companies.component';
+import { HttpErrorHandler } from './http-error-handler.service';
 
 @NgModule({
   declarations: [
@@ -35,9 +38,10 @@ import { CompaniesComponent } from './companies/companies.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    NgpImagePickerModule
+    NgpImagePickerModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [HttpErrorHandler],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

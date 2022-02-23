@@ -1,9 +1,9 @@
 <section class="d-flex flex-column align-items-center">
   <h2>Región/Ciudad</h2>
   <ul id="myUL">
-    <li class="region" *ngFor="let region of regions; index as i" ><span [class.caret-down]="region.opened" class="caret" (click)="region.opened = !region.opened"> {{region.name}} </span>
+    <li class="region" *ngFor="let region of regions; index as i" ><span [class.caret-down]="region.opened" class="caret" (click)="openRegion(i)"> {{region.name}} </span>
       <ul [class.active]="region.opened" class="nested">
-        <li class="country" *ngFor="let country of region.countries; index as y"><span [class.caret-down]="country.opened" class="caret" (click)="country.opened = !country.opened">{{country.name}}</span>
+        <li class="country" *ngFor="let country of region.countries; index as y"><span [class.caret-down]="country.opened" class="caret" (click)="openCountry(i,y)">{{country.name}}</span>
           <ul  [class.active]="country.opened" class="nested">
             <li *ngFor="let city of country.cities; index as z">{{city.name}}</li>
             <li class="add" (click)="showAgregar(i,y,'ciudad')"> <i class="bi bi-plus-square-fill"></i> Agregar ciudad</li>
