@@ -19,6 +19,7 @@ import { UsersComponent } from './users/users.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { LowerCasePipe } from '@angular/common';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LowerCasePipe } from '@angular/common';
     RegionCityComponent,
     LoginComponent,
     UsersComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,

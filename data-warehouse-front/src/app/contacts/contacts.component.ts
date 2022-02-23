@@ -254,7 +254,7 @@ export class ContactsComponent implements OnInit {
     });
   }
 
-  getPhoto(binary: Blob){
+  getPhoto(binary: any){
     
     let unsafeImageUrl = URL.createObjectURL(binary);
         return this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);

@@ -12,7 +12,7 @@ export interface Contact {
     City: Field,
     channels: Channel[];
     checked: boolean;
-    photo: Blob;
+    photo: string;
   }
 export interface Channel {
     id: number;
