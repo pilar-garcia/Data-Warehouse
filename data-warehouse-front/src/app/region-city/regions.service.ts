@@ -12,12 +12,9 @@ import { Region } from './region';
 })
 export class RegionsService {
 
-  private handleError: HandleError;
 
   constructor(private loginService: LoginService,
-    private http: HttpClient,
-    httpErrorHandler: HttpErrorHandler) { 
-      this.handleError = httpErrorHandler.createHandleError('RegionService');
+    private http: HttpClient) {
     }
 
   getRegions() {

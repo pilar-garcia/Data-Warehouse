@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Company } from './company';
+import { CompanyService } from './company.service';
 
 @Component({
   selector: 'app-companies',
@@ -9,14 +11,11 @@ import { Company } from './company';
 })
 export class CompaniesComponent implements OnInit {
 
-  companies: Company[] = [
-    { name: 'Acamica', address: '123 rio la plata', country: 'Argentina'},
-    { name: 'Mercadolibre', address: 'Cr 118 # 32A-3', country: 'Colombia'}
-  ];
+  companies: Company[] = [];
 
   form: FormGroup;
 
-  constructor( private formBuilder: FormBuilder) { 
+  constructor( private formBuilder: FormBuilder, private companyService: CompanyService) { 
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       country: ['', Validators.required],
@@ -30,6 +29,15 @@ export class CompaniesComponent implements OnInit {
       country: ['', Validators.required],
       address: ['', Validators.required]
     });
+    this.getCompanies();
+  }
+
+  getCompanies(): void {
+    this.companyService.getCompanies().then((value: Observable<Company[]>) =>{
+      value.subscribe((companies: Company[]) =>{
+          this.companies = companies;
+      });
+    });
   }
 
   get controls(){
@@ -39,7 +47,7 @@ export class CompaniesComponent implements OnInit {
   addCompany(): void {
     if(this.form.valid){
       this.companies.push(
-        { name: this.controls['name'].value, country: this.controls['country'].value, address: this.controls['address'].value }
+        { name: this.controls['name'].value, Country: this.controls['country'].value, address: this.controls['address'].value }
         );
       this.form.reset();
     }
