@@ -6,17 +6,7 @@ module.exports = {
             let companyToSave = req.body;
             const company =  sequelize.models.Company.build({ name: companyToSave.name, address: companyToSave.address, countryId: companyToSave.countryId });
             company.save().then((companySaved) => {
-                sequelize.models.Company.findOne({
-                    where: {
-                      id: companySaved
-                    },
-                    include: [ { model: sequelize.models.Country, as: 'Country' } ]
-                  }).then(result=>{
-                    res.status(200).json(result);
-                  }).catch((error)=>{
-                    console.error('Error getting company:', error);
-                    res.status(400).json(error);
-                });
+                res.status(200).json(companySaved);
             }).catch((error)=>{
                 res.status(400).json(error);
                 console.error('Unable to connect to the database:', error);

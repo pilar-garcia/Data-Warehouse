@@ -31,10 +31,23 @@ module.exports = {
               console.error('Unable to connect to the database:', error);
           }
     },
-    getCountries: (req, res) => {
+    getCountriesByRegion: (req, res) => {
         try {
             let regionId = req.params.regionId;
             sequelize.models.Country.findAll({ where: { regionId: regionId } }).then((countries) => {
+                res.status(200).json(countries);
+            }).catch((error)=>{
+                res.status(400).json(error);
+            });
+              
+          } catch (error) {
+              res.status(400).json(error);
+              console.error('Unable to connect to the database:', error);
+          }
+    },
+    getCountries: (req, res) => {
+        try {
+            sequelize.models.Country.findAll().then((countries) => {
                 res.status(200).json(countries);
             }).catch((error)=>{
                 res.status(400).json(error);

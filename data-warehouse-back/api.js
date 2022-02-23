@@ -13,7 +13,7 @@ const {
   } = require("./middlewares");
   const { createUser, login, getUser } = require("./userController");
   const { createRegion, getRegion, getRegions, updateRegion, deleteRegion } = require("./RegionController");
-  const { createCountry, getCountry, updateCountry, getCountries} = require("./CountryController");
+  const { createCountry, getCountry, updateCountry, getCountries, getCountriesByRegion} = require("./CountryController");
   const { createCity, getCity, updateCity, getCities} = require("./CityController");
   const { createCompany, getCompany, updateCompany, getCompanies} = require("./CompanyController");
   
@@ -46,7 +46,8 @@ app.patch("/regions/:regionId", validacionJWTAdmin, updateRegion); // UPDATE Reg
 // Country
 app.post("/countries", validateCountryData, validacionJWT, createCountry); // 
 app.get("/countries/:countryId", validacionJWT, getCountry); // 
-app.get("/regions/:regionId/countries", validacionJWT, getCountries); // 
+app.get("/countries", validacionJWT, getCountries); // 
+app.get("/regions/:regionId/countries", validacionJWT, getCountriesByRegion); // 
 app.patch("/countries/:countryId", validacionJWTAdmin, updateCountry); // 
 // Cities
 app.post("/cities", validateCityData, validacionJWT, createCity); // 
