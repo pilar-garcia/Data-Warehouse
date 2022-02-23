@@ -10,8 +10,8 @@ module.exports = {
       res.status(400).json({"msj":"All fields are required"});
     }
   },
-  validateProductData: (req, res, next) => {
-    if (req.body.name && req.body.price && req.body.imgUrl) {
+  validateRegionData: (req, res, next) => {
+    if (req.body.name) {
       next();
     } else {
       res.status(400).json({"msj":"All fields are required"});

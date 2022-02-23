@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('mysql://admin:delilah@localhost:3306/delilah')
+const sequelize = new Sequelize('mysql://admin:dalilah@localhost:3306/dalilah')
 
 class City extends Model {}
 
@@ -62,145 +62,6 @@ Region.init({
 });
 
 
-
-class Companies extends Model {}
-
-Companies.init({
-  // Model attributes are defined here
-  companyId: {
-    type: Sequelize.INTEGER,
-    allowNull:false,
-    autoIncrement: true,
-    primaryKey: true,
-    },
-    companyName: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    companyAddress: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },companyEmail: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },companyPhone: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },cityId: {
-      type: DataTypes.STRING,
-      references: {
-        model: Cities,
-        key:'cityId'
-      }
-    },
-  }, {
-    // Other model options go here
-    sequelize, // We need to pass the connection instance
-    modelName: 'Companies' // We need to choose the model name
-  });
-
-
-class Contact extends Model {}
-
-Contact.init({
-  // Model attributes are defined here
-  contactId: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-    },
-  contactName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  contactLastName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  contactCharge: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  contactEmail: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  companyId:{
-    type: DataTypes.INTEGER,
-    references: {
-      model:Companies,
-      key:'companyId'
-    }
-  },
-  regionId:{
-    type: DataTypes.INTEGER,
-    references: {
-      model:Regions,
-      key:'regionId'
-    }
-  },
-  countryId:{
-    type: DataTypes.INTEGER,
-    references: {
-      model:countries,
-      key:'countryId'
-    }
-  },
-  cityId: {
-    type: DataTypes.INTEGER,
-    references: {
-        model:City,
-        key:'city_id'
-    }        
-},
-contactAddress: {
-    type: DataTypes.STRING,
-    allowNull:false
-},
-contactInterest: {
-    type: DataTypes.INTEGER,
-    allowNull:false
-}
-}, {
-  // Other model options go here
-  sequelize, // We need to pass the connection instance
-  modelName: 'Contact' // We need to choose the model name
-});
-
-class Channel extends Model {}
-
-Channel.init({
-  // Model attributes are defined here
-  channelId: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-    },
-  channelName: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  channelAccount: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  channelPreferences: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  contactId: {
-    type: DataTypes.INTEGER,
-    references: {
-        model:Contact,
-        key:'contactId'
-    }        
-}
-}, {
-  // Other model options go here
-  sequelize, // We need to pass the connection instance
-  modelName: 'Channel' // We need to choose the model name
-});
-
 class Users extends Model {}
 
 Users.init({
@@ -248,6 +109,103 @@ Country.hasMany(City, {
   foreignKey: 'cityId'
 });
 
+class User extends Model {}
 
+User.init({
+  // Model attributes are defined here
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+  userName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  fullName: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+     type: DataTypes.STRING,
+     allowNull: false   
+  },
+  phone: {
+     type: DataTypes.STRING,
+     allowNull: false   
+  },
+  address: {
+     type: DataTypes.STRING,
+     allowNull: false   
+  },
+  pass: {
+     type: DataTypes.STRING,
+     allowNull: false   
+  }
+}, {
+  // Other model options go here
+  sequelize, // We need to pass the connection instance
+  modelName: 'User' // We need to choose the model name
+});
+
+
+class Rol extends Model {}
+
+Rol.init({
+  // Model attributes are defined here
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+  }, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'Rol' // We need to choose the model name
+  });
+
+
+Region.sync();
+Country.sync();
+City.sync();
+
+Rol.sync().then(result=>{
+  Rol.findOrCreate({
+    where: { name: 'ADMIN' },
+    defaults: {
+      name: 'ADMIN'
+    }
+  });
+  Rol.findOrCreate({
+    where: { name: 'CLIENT' },
+    defaults: {
+      name: 'CLIENT'
+    }
+  });
+}).catch((error)=>{
+  console.error('Error', error);
+});
+
+User.sync().then(result=>{
+  User.findOrCreate({
+    where: { userName: 'ADMIN' },
+    defaults: {
+      userName: 'admin',
+      fullName: 'administrator',
+      email: 'admin@admin.co',
+      phone: '0000000',
+      address: 'Delilah resto',
+      pass: 'admin',
+      rolId: '1'
+    }
+  });
+}).catch((error)=>{
+  console.error('Error', error);
+});
 
 module.exports = sequelize;

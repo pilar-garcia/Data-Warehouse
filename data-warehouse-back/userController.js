@@ -1,4 +1,4 @@
-const sequelize = require('./model')
+const sequelize = require('./models')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
