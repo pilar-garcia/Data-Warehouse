@@ -1,31 +1,64 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = new Sequelize('mysql://admin:delilah@localhost:3306/delilah')
 
-class Cities extends Model {}
+class City extends Model {}
 
-Cities.init({
+City.init({
   // Model attributes are defined here
-  cityId: {
+  id: {
     type: Sequelize.INTEGER,
     allowNull:false,
     autoIncrement: true,
     primaryKey: true,
     },
-  cityName: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  countryId: {
-    type: DataTypes.STRING,
-    references: {
-      model: countries,
-      key:'countryId'
-    }
   }
 }, {
   // Other model options go here
   sequelize, // We need to pass the connection instance
-  modelName: 'Cities' // We need to choose the model name
+  modelName: 'City' // We need to choose the model name
+});
+
+class Country extends Model {}
+
+Country.init({
+  // Model attributes are defined here
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull:false,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
+}, {
+  // Other model options go here
+  sequelize, // We need to pass the connection instance
+  modelName: 'Country' // We need to choose the model name
+});
+
+class Region extends Model {}
+
+Region.init({
+  // Model attributes are defined here
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull:false,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
+}, {
+  // Other model options go here
+  sequelize, // We need to pass the connection instance
+  modelName: 'Region' // We need to choose the model name
 });
 
 
@@ -168,59 +201,6 @@ Channel.init({
   modelName: 'Channel' // We need to choose the model name
 });
 
-class Countries extends Model {}
-
-Countries.init({
-  // Model attributes are defined here
-  countryId: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-    },
-  countryName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  regionId: {
-    type: DataTypes.INTEGER,
-    references: {
-        model:Regions,
-        key:'regionId'
-    }        
-}
-}, {
-  // Other model options go here
-  sequelize, // We need to pass the connection instance
-  modelName: 'Countries' // We need to choose the model name
-});
-
-class Regions extends Model {} 
-
-Regions.init({
-  // Model attributes are defined here
-  regionId: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull:false,
-    primaryKey: true,
-    },
-  regionName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-}, {
-  // Other model options go here
-  sequelize, // We need to pass the connection instance
-  modelName: 'Regions' // We need to choose the model name
-});
-
-Countries.hasMany(Regions, {
-  foreignKey: 'countryId'
-});
-Cities.belongsTo(Countries, {
-  foreignKey: 'cityId'
-});
-
 class Users extends Model {}
 
 Users.init({
@@ -259,5 +239,15 @@ userAdminFlag: {
   sequelize, // We need to pass the connection instance
   modelName: 'Users' // We need to choose the model name
 });
+
+Region.hasMany(Country, {
+  foreignKey: 'regionId'
+});
+
+Country.hasMany(City, {
+  foreignKey: 'cityId'
+});
+
+
 
 module.exports = sequelize;
