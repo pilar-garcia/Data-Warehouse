@@ -22,7 +22,7 @@ interface State {
   sortDirection: SortDirection;
 }
 
-const compare = (v1: string | Field | number | boolean | Channel[], v2: string | Field | number | boolean | Channel[]) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+const compare = (v1: string | Field | number | Blob | boolean | Channel[], v2: string | Field | number | Blob | boolean | Channel[]) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 function sort(countries: Contact[], column: SortColumn, direction: string): Contact[] {
   if (direction === '' || column === '') {

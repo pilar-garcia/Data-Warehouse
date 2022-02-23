@@ -16,6 +16,7 @@ import { City } from '../region-city/city';
 import { ContactApiService } from './contact-api.service';
 import { CompanyService } from '../companies/company.service';
 import { Company } from '../companies/company';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-contacts',
@@ -34,6 +35,7 @@ export class ContactsComponent implements OnInit {
   displayMoreActions = "none";
   interes: number = 0;
   companies: Company[] = [];
+  photo: any;
 
   selectedRegion: Region = {id: 0, name:'', countries: [], opened: false};
   selectedCountry: Country = {id: 0, name:'', cities: [], opened: false};
@@ -73,6 +75,7 @@ export class ContactsComponent implements OnInit {
 
   constructor(public service: CountryService, private formBuilder: FormBuilder,
      private regionService: RegionsService, private contactApi: ContactApiService,
+     private sanitizer: DomSanitizer,
      private companyService: CompanyService) {
     this.countries$ = service.countries$;
     console.log(service.countries$);
@@ -193,7 +196,7 @@ export class ContactsComponent implements OnInit {
   }
 
   onImageChange(value: any): void{
-    console.log(value);
+    this.photo = value;
   }
 
   addChannel(){
@@ -225,7 +228,8 @@ export class ContactsComponent implements OnInit {
         cityId: this.controls['city'].value,
         companyId: this.controls['inputCompany'].value,
         interes: this.interes+'', 
-        channels: this.channels,      
+        channels: this.channels,
+        photo: this.photo    
       }
       this.contactApi.postContact(contact).then(value => {
         value.subscribe(contact =>{
@@ -248,6 +252,12 @@ export class ContactsComponent implements OnInit {
           this.companies = companies;
       });
     });
+  }
+
+  getPhoto(binary: Blob){
+    
+    let unsafeImageUrl = URL.createObjectURL(binary);
+        return this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
   }
 
 }

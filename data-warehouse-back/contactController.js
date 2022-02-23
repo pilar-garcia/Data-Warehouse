@@ -8,6 +8,7 @@ module.exports = {
             const contact =  sequelize.models.Contact.build(
                 { name: contactToSave.name, lastName: contactToSave.lastName, position: contactToSave.position,
                      address: contactToSave.address, cityId: contactToSave.cityId, email: contactToSave.email,
+                     photo: contactToSave.photo,
                      interes: contactToSave.interes, companyId: contactToSave.companyId });
             contact.save().then((contactSaved) => {
                 let promisesItem = [];

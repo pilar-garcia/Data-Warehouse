@@ -217,6 +217,10 @@ Contact.init({
     email: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    photo: {
+      type: DataTypes.BLOB,
+      allowNull: false
     }
   }, {
     // Other model options go here

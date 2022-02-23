@@ -1,7 +1,6 @@
 export interface Contact {
     id: number;
     name: string;
-    photo: string;
     lastName: string;
     position: string;
     address: string;
@@ -13,6 +12,7 @@ export interface Contact {
     City: Field,
     channels: Channel[];
     checked: boolean;
+    photo: Blob;
   }
 export interface Channel {
     id: number;
