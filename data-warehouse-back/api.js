@@ -7,6 +7,7 @@ const {
     validateRegionData,
     validateCountryData,
     validateCityData,
+    validateCompanyData,
     validacionJWT,
     validacionJWTAdmin,
   } = require("./middlewares");
@@ -14,6 +15,7 @@ const {
   const { createRegion, getRegion, getRegions, updateRegion, deleteRegion } = require("./RegionController");
   const { createCountry, getCountry, updateCountry, getCountries} = require("./CountryController");
   const { createCity, getCity, updateCity, getCities} = require("./CityController");
+  const { createCompany, getCompany, updateCompany, getCompanies} = require("./CompanyController");
   
   app.use(express.json());
   app.use(cors());
@@ -52,9 +54,9 @@ app.get("/cities/:cityId", validacionJWT, getCity); //
 app.get("/countries/:countryId/cities", validacionJWT, getCities); // 
 app.patch("/cities/:cityId", validacionJWTAdmin, updateCity); // 
 
-/*
+
 // COMPANIES
-app.post("/companies", validateOrderData, validacionJWT, createOrder); // 
-app.get("/companies/:companyId", validacionJWT, getOrder); // 
-app.patch("/companies/:companyId", validacionJWTAdmin, updateOrder); // 
-*/
+app.post("/companies", validateCompanyData, validacionJWT, createCompany); // 
+app.get("/companies/:companyId", validacionJWT, getCompany); // 
+app.get("/companies", validacionJWT, getCompanies); // 
+app.patch("/companies/:companyId", validacionJWTAdmin, updateCompany); // 

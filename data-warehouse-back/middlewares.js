@@ -24,6 +24,13 @@ module.exports = {
       res.status(400).json({"msj":"All fields are required"});
     }
   },
+  validateCompanyData: (req, res, next) => {
+    if (req.body.name && req.body.countryId && req.body.address ) {
+      next();
+    } else {
+      res.status(400).json({"msj":"All fields are required"});
+    }
+  },
   validateCityData: (req, res, next) => {
     if (req.body.name && req.body.countryId) {
       next();

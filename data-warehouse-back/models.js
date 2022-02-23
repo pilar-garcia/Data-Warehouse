@@ -162,6 +162,29 @@ Rol.init({
   });
 
   
+class Company extends Model {}
+
+Company.init({
+  // Model attributes are defined here
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+  }, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'Company' // We need to choose the model name
+  });
+  
 Region.hasMany(Country, {
   foreignKey: 'regionId'
 });
@@ -170,10 +193,18 @@ Country.hasMany(City, {
   foreignKey: 'countryId'
 });
 
+Country.hasMany(Company, {
+  foreignKey: 'countryId'
+});
+
+Company.belongsTo(Country, {
+  foreignKey: 'countryId'
+});
 
 Region.sync();
 Country.sync();
 City.sync();
+Company.sync();
 
 Rol.sync().then(result=>{
   Rol.findOrCreate({
