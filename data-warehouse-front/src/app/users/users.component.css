@@ -2,3 +2,20 @@ section{
     min-height: 600px;
     background-color: aliceblue;
 }
+
+.error{
+    background-color: black;
+    color: red;
+}
+
+.mim-height{
+    min-height: 0px;
+}
+
+.th{
+    min-width: 20%;
+}
+
+.rw{
+    min-width: 20%;
+}

@@ -5,7 +5,7 @@
             <label for="name">Nombre</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="lastname" id="lastname">
+            <input type="text" class="form-control" formControlName="lastName" id="lastname">
             <label for="lastname">Apellido</label>
         </div>
         <div class="form-floating mb-3">
@@ -28,8 +28,31 @@
             <input type="password" class="form-control" formControlName="checkpassword" id="checkpassword">
             <label for="checkpassword">Repetir Contraseña</label>
         </div>
+        <div *ngIf="errorMessage != ''" class="form-floating mb-3 error">
+            <h2> {{errorMessage}} </h2>
+        </div>
+
         <div class="form-floating mb-3 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Resitrar</button>
         </div>
     </form>
+</section>
+
+<section class="d-flex justify-content-center align-items-center mim-height">
+    <div class="tb d-flex flex-column">
+        <div class="header d-flex">
+            <div class="th">Nombre</div>
+            <div class="th">Apellidos</div>
+            <div class="th">Email</div>
+            <div class="th">Profile</div>
+            <div class="th">Acciones</div>
+        </div>
+        <div *ngFor="let user of users; index as i" class="data d-flex">
+            <div class="rw"> {{user.name}} </div>
+            <div class="rw"> {{user.lastName}} </div>
+            <div class="rw"> {{user.email}} </div>
+            <div class="rw"> {{user.Rol.name}} </div>
+            <div class="rw">Editar | Eliminar</div>
+        </div>
+    </div>
 </section>

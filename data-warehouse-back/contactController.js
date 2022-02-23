@@ -77,16 +77,54 @@ module.exports = {
             let contactId = req.params.ContactId;
             let contactToUpdate = req.body;
             
-            sequelize.models.Contact.findByPk(ContactId).then((Contact) => {
+            sequelize.models.Contact.findByPk(contactId).then((contact) => {
                 contact.name = contactToUpdate.name;
-                contact.price = contactToUpdate.price;
-                contact.imgUrl = contactToUpdate.imgUrl;
-             
+                contact.lastName = contactToUpdate.lastName;
+                contact.email = contactToUpdate.email;
+                contact.address = contactToUpdate.address;
+                contact.position = contactToUpdate.position;
+                contact.interes = contactToUpdate.interes;
+                contact.photo = contactToUpdate.photo;
 
               // actualiza contact
               contact.save().then((updatedContact) => {
                 
-                res.status(200).json(updatedContact);
+                let promisesItem = [];
+                //product plus others product  result the sum of amounts by price and total
+                contactToUpdate.channels.forEach(itemToSave => {
+                    let promiseItem = new Promise((resolve, reject) => {
+                            sequelize.models.Item.findOrCreate({
+                                where: { contactId: contactToUpdate.id, name: itemToSave.name },
+                                defaults: {
+                                  contactId: contactToUpdate.id,
+                                  name: itemToSave.name,
+                                  value: itemToSave.value,
+                                  preference: itemToSave.preference,
+                                }
+                            }).then(item=>{
+                                let foundItem = item[0];
+                                foundItem.value = itemToSave.value;
+                                foundItem.preference = itemToSave.preference;
+                                foundItem.save().then(updatedItem=>{
+                                    resolve(updatedItem);
+                                }).catch((error)=>{
+                                    console.error('Error updating item', error);
+                                    reject(error);
+                                });
+                            }).catch((error)=>{
+                              console.error('Error finding item', error);
+                              reject(error);
+                            });
+                    });
+                    promisesItem.push(promiseItem);
+                });
+                
+                    Promise.all(promisesItem).then(values=>{
+                        res.status(200).json(updatedContact);
+                    }).catch((error)=>{
+                        console.error('Unable to connect to the database:', error);
+                        res.status(400).json(error);
+                    });
                 }).catch((error)=>{
                     res.status(400).json(error);
                     console.error('Unable to connect to the database:', error);

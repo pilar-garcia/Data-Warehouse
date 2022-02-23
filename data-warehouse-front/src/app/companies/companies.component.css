@@ -2,26 +2,4 @@
     min-height: 400px;
 }
 
-.header{
-    background-color: #1C6EA4;
-}
-
-.data:hover{
- background-color: #1c6ea490;
-}
-
-.tb{
-    text-align: center;
-    min-width: 800px;
-}
-
-.th{
-    min-width: 25%;
-    border: 3px double aliceblue;
-}
-
-.rw{
-    min-width: 25%;
-    border: 3px double #1C6EA4;
-}
 

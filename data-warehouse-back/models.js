@@ -110,24 +110,15 @@ User.init({
     autoIncrement: true,
     primaryKey: true,
     },
-  userName: {
+  name: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
-  fullName: {
+  lastName: {
     type: DataTypes.STRING,
     allowNull: false
   },
   email: {
-     type: DataTypes.STRING,
-     allowNull: false   
-  },
-  phone: {
-     type: DataTypes.STRING,
-     allowNull: false   
-  },
-  address: {
      type: DataTypes.STRING,
      allowNull: false   
   },
@@ -315,13 +306,11 @@ Rol.sync().then(result=>{
 
 User.sync().then(result=>{
   User.findOrCreate({
-    where: { userName: 'ADMIN' },
+    where: { email: 'admin@admin.co' },
     defaults: {
-      userName: 'admin',
-      fullName: 'administrator',
+      name: 'admin',
+      lastName: 'administrator',
       email: 'admin@admin.co',
-      phone: '0000000',
-      address: 'Delilah resto',
       pass: 'admin',
       rolId: '1'
     }

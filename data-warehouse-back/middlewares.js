@@ -4,7 +4,7 @@ const tokenKey = "secret";
 
 module.exports = {
   validateUserData: (req, res, next) => {
-    if (req.body.userName && req.body.email && req.body.fullName && req.body.phone && req.body.address && req.body.pass) {
+    if (req.body.name && req.body.email && req.body.lastName && req.body.pass && req.body.rolId) {
       next();
     } else {
       res.status(400).json({"msj":"All fields are required"});

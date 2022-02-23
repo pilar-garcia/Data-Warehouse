@@ -30,7 +30,7 @@ export class LoginService {
           'Content-Type':  'application/json'
         })
       };
-      this.http.post<Login>('http://127.0.0.1:3000/users/login', {userName: user.email, pass: user.password},httpOptions)
+      this.http.post<Login>('http://127.0.0.1:3000/users/login', {email: user.email, pass: user.password},httpOptions)
         .subscribe(login  => {
            this.user.next(login);
            resolve(user);
