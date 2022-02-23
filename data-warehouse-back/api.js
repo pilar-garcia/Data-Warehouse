@@ -8,6 +8,7 @@ const {
     validateCountryData,
     validateCityData,
     validateCompanyData,
+    validateContactData,
     validacionJWT,
     validacionJWTAdmin,
   } = require("./middlewares");
@@ -16,6 +17,7 @@ const {
   const { createCountry, getCountry, updateCountry, getCountries, getCountriesByRegion} = require("./CountryController");
   const { createCity, getCity, updateCity, getCities} = require("./CityController");
   const { createCompany, getCompany, updateCompany, getCompanies} = require("./CompanyController");
+  const { createContact, getContact, updateContact, getContacts, deleteContact} = require("./ContactController");
   
   app.use(express.json());
   app.use(cors());
@@ -32,11 +34,11 @@ app.post("/users/login", login); // LOGIN USER
 app.get("/usuarios/:userId", validacionJWT, getUser); // LISTAR DATOS DE UN USUARIO ESPECIFICO
 
 // CONTACTS
-app.post("/contacts", validateRegionData, validacionJWTAdmin, createRegion); // CREATE RegionS
-app.get("/contacts", validacionJWT, getRegions); // GET ALL RegionS
-app.get("/contacts/:contactId", validacionJWT, getRegion); // FIND Region BY ID
-app.patch("/contacts/:contactId", validacionJWTAdmin, updateRegion); // UPDATE Region
-app.delete("/contact/:contactId", validacionJWTAdmin, deleteRegion); // DELETE Region
+app.post("/contacts", validateContactData, validacionJWTAdmin, createContact); // CREATE RegionS
+app.get("/contacts", validacionJWT, getContacts); // GET ALL RegionS
+app.get("/contacts/:contactId", validacionJWT, getContact); // FIND Region BY ID
+app.patch("/contacts/:contactId", validacionJWTAdmin, updateContact); // UPDATE Region
+app.delete("/contact/:contactId", validacionJWTAdmin, deleteContact); // DELETE Region
 
 // Regions
 app.post("/regions", validateRegionData, validacionJWT, createRegion); // CREATE Region

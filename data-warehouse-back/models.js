@@ -178,12 +178,75 @@ Company.init({
     address: {
       type: DataTypes.STRING,
       allowNull: false
-    },
+    }
   }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
     modelName: 'Company' // We need to choose the model name
   });
+
+  class Contact extends Model {}
+
+Contact.init({
+  // Model attributes are defined here
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    position: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    interes: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+  }, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'Contact' // We need to choose the model name
+  });
+
+  class Channel extends Model {}
+
+Channel.init({
+  // Model attributes are defined here
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    value: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    preference: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    // Other model options go here
+    sequelize, // We need to pass the connection instance
+    modelName: 'Channel' // We need to choose the model name
+  });
+
   
 Region.hasMany(Country, {
   foreignKey: 'regionId'
@@ -201,10 +264,29 @@ Company.belongsTo(Country, {
   foreignKey: 'countryId'
 });
 
+Contact.belongsTo(City, {
+  foreignKey: 'cityId'
+});
+
+Contact.belongsTo(Company, {
+  foreignKey: 'companyId'
+});   
+
+Contact.hasMany(Channel, {
+foreignKey: 'contactId'
+}) 
+
+User.belongsTo(Rol, {
+  foreignKey: 'rolId'
+});
+
+
 Region.sync();
 Country.sync();
 City.sync();
 Company.sync();
+Contact.sync();
+Channel.sync();
 
 Rol.sync().then(result=>{
   Rol.findOrCreate({

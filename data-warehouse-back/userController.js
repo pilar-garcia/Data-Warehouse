@@ -33,6 +33,7 @@ module.exports = {
         sequelize.models.User.findOne({ where: { userName: userToAuthenticate.userName } }).then((user) => {
           // Verificar contra
           if (user.pass == userToAuthenticate.pass){
+            console.log(user);
             // Generar token de autenticacion
             let authentication = {
               fullName: user.fullName,
