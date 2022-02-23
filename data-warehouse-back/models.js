@@ -101,14 +101,6 @@ userAdminFlag: {
   modelName: 'Users' // We need to choose the model name
 });
 
-Region.hasMany(Country, {
-  foreignKey: 'regionId'
-});
-
-Country.hasMany(City, {
-  foreignKey: 'cityId'
-});
-
 class User extends Model {}
 
 User.init({
@@ -168,6 +160,15 @@ Rol.init({
     sequelize, // We need to pass the connection instance
     modelName: 'Rol' // We need to choose the model name
   });
+
+  
+Region.hasMany(Country, {
+  foreignKey: 'regionId'
+});
+
+Country.hasMany(City, {
+  foreignKey: 'countryId'
+});
 
 
 Region.sync();

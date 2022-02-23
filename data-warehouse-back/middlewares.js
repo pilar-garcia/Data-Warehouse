@@ -24,6 +24,13 @@ module.exports = {
       res.status(400).json({"msj":"All fields are required"});
     }
   },
+  validateCityData: (req, res, next) => {
+    if (req.body.name && req.body.countryId) {
+      next();
+    } else {
+      res.status(400).json({"msj":"All fields are required"});
+    }
+  },
   validacionJWT: (req, res, next) => {
     try {
       const token = req.headers.authorization;

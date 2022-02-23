@@ -1,19 +1,23 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const cors = require('cors')
+const app = express();
 
 const {
     validateUserData,
     validateRegionData,
     validateCountryData,
+    validateCityData,
     validacionJWT,
     validacionJWTAdmin,
   } = require("./middlewares");
   const { createUser, login, getUser } = require("./userController");
   const { createRegion, getRegion, getRegions, updateRegion, deleteRegion } = require("./RegionController");
   const { createCountry, getCountry, updateCountry} = require("./CountryController");
+  const { createCity, getCity, updateCity} = require("./CityController");
   
   app.use(express.json());
-  
+  app.use(cors());
+
   app.listen(3000, () => {
     console.log("Servidor en puerto 3000");
   });
@@ -41,14 +45,14 @@ app.patch("/regions/:regionId", validacionJWTAdmin, updateRegion); // UPDATE Reg
 app.post("/countries", validateCountryData, validacionJWT, createCountry); // CREATE ORDER
 app.get("/countries/:countryId", validacionJWT, getCountry); // GET ORDER
 app.patch("/countries/:countryId", validacionJWTAdmin, updateCountry); // UPDATE ORDER
+// Cities
+app.post("/cities", validateCityData, validacionJWT, createCity); // CREATE ORDER
+app.get("/cities/:cityId", validacionJWT, getCity); // GET ORDER
+app.patch("/cities/:cityId", validacionJWTAdmin, updateCity); // UPDATE ORDER
 
 /*
 // COMPANIES
 app.post("/companies", validateOrderData, validacionJWT, createOrder); // CREATE ORDER
 app.get("/companies/:companyId", validacionJWT, getOrder); // GET ORDER
 app.patch("/companies/:companyId", validacionJWTAdmin, updateOrder); // UPDATE ORDER
-// Cities
-app.post("/cities", validateOrderData, validacionJWT, createOrder); // CREATE ORDER
-app.get("/cities/:cityId", validacionJWT, getOrder); // GET ORDER
-app.patch("/cities/:cityId", validacionJWTAdmin, updateOrder); // UPDATE ORDER
 */
