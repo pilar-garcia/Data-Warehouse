@@ -4,7 +4,7 @@ module.exports = {
     createCompany: (req, res) => {
         try {
             let companyToSave = req.body;
-            const company =  sequelize.models.Company.build({ name: companyToSave.name, address: companyToSave.address, countryId: companyToSave.countryId });
+            const company =  sequelize.models.Company.build({ name: companyToSave.name, address: companyToSave.address, cityId: companyToSave.cityId });
             company.save().then((companySaved) => {
                 res.status(200).json(companySaved);
             }).catch((error)=>{
@@ -20,7 +20,7 @@ module.exports = {
         try {
             let companyId = req.params.CompanyId;
             
-            sequelize.models.Company.findOne({ where: { id: companyId }, include: [ { model: sequelize.models.Country, as: 'Country' } ] }).then((Company) => {
+            sequelize.models.Company.findOne({ where: { id: companyId }, include: [ { model: sequelize.models.City, as: 'City' } ] }).then((Company) => {
               res.status(200).json(Company);
             }).catch((error)=>{
               res.status(400).json(error);
@@ -33,7 +33,7 @@ module.exports = {
     },
     getCompanies: (req, res) => {
         try {
-            sequelize.models.Company.findAll({include: [ { model: sequelize.models.Country, as: 'Country' } ]}).then((Companys) => {
+            sequelize.models.Company.findAll({include: [ { model: sequelize.models.City, as: 'City' } ]}).then((Companys) => {
                 res.status(200).json(Companys);
             }).catch((error)=>{
                 res.status(400).json(error);

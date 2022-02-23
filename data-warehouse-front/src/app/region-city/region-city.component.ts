@@ -88,7 +88,7 @@ export class RegionCityComponent implements OnInit {
           });
           break;
       case 'ciudad':
-        this.regionService.postCity(this.inputName, this.regions[this.countrySelected].id).then((value: Observable<City>) =>{
+        this.regionService.postCity(this.inputName, this.regions[this.regionSelected].countries[this.countrySelected].id).then((value: Observable<City>) =>{
           value.subscribe((city: City) =>{
             this.regions[this.regionSelected].countries[this.countrySelected].cities.push(city);
             this.regionSelected = 0;

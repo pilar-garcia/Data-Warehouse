@@ -25,7 +25,7 @@ module.exports = {
     }
   },
   validateCompanyData: (req, res, next) => {
-    if (req.body.name && req.body.countryId && req.body.address ) {
+    if (req.body.name && req.body.cityId && req.body.address ) {
       next();
     } else {
       res.status(400).json({"msj":"All fields are required"});

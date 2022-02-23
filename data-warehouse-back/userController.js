@@ -33,7 +33,7 @@ module.exports = {
         sequelize.models.User.findOne({ where: { userName: userToAuthenticate.userName } }).then((user) => {
           // Verificar contra
           if (user.pass == userToAuthenticate.pass){
-            console.log(user);
+            
             // Generar token de autenticacion
             let authentication = {
               fullName: user.fullName,
@@ -43,9 +43,11 @@ module.exports = {
             const token = jwt.sign(authentication, 'secret', {
                 expiresIn: '2h'
             });
+            console.log(authentication.admin, "admin");
             res.status(200).header('Authorization', token).json({
               data: `Welcome ${user.fullName}`,
-              token
+              token,
+              admin: authentication.admin
             });
           } else {
             res.status(401).json({ error: 'Verify credetials'});

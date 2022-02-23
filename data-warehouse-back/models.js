@@ -268,8 +268,8 @@ Country.hasMany(Company, {
   foreignKey: 'countryId'
 });
 
-Company.belongsTo(Country, {
-  foreignKey: 'countryId'
+Company.belongsTo(City, {
+  foreignKey: 'cityId'
 });
 
 Contact.belongsTo(City, {

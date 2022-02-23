@@ -13,9 +13,13 @@
             <label for="email">Email</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="profile" id="profile">
-            <label for="profile">Perfil</label>
-        </div>
+            <select class="form-select" id="inputPreferences" aria-label="Floating label select example" formControlName="profile">
+              <option selected>Seleccione</option>
+              <option value="1">ADMIN</option>
+              <option value="2">CLIENT</option>
+            </select>
+            <label for="inputPreferences">Perfil</label>
+          </div>
         <div class="form-floating mb-3">
             <input type="password" class="form-control" formControlName="password" id="password">
             <label for="password">Contraseña</label>

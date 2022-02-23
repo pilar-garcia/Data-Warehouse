@@ -28,7 +28,7 @@ export class CompanyService {
     });
   }
 
-  postCompany(name: string, address: string, countryId: number){
+  postCompany(name: string, address: string, cityId: number){
 
     return new Promise<Observable<Company>>(resolve=>{
       this.loginService.user.pipe(
@@ -40,7 +40,7 @@ export class CompanyService {
             Authorization: user.token
           })
         };
-        resolve(this.http.post<Company>('http://127.0.0.1:3000/companies', {name: name, countryId: countryId, address: address },httpOptions));
+        resolve(this.http.post<Company>('http://127.0.0.1:3000/companies', {name: name, cityId: cityId, address: address },httpOptions));
       });     
     });
     

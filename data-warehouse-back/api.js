@@ -15,7 +15,7 @@ const {
   const { createUser, login, getUser } = require("./userController");
   const { createRegion, getRegion, getRegions, updateRegion, deleteRegion } = require("./RegionController");
   const { createCountry, getCountry, updateCountry, getCountries, getCountriesByRegion} = require("./CountryController");
-  const { createCity, getCity, updateCity, getCities} = require("./CityController");
+  const { createCity, getCity, updateCity, getCities, getCitiesByCountry} = require("./CityController");
   const { createCompany, getCompany, updateCompany, getCompanies} = require("./CompanyController");
   const { createContact, getContact, updateContact, getContacts, deleteContact} = require("./ContactController");
   
@@ -54,7 +54,8 @@ app.patch("/countries/:countryId", validacionJWTAdmin, updateCountry); //
 // Cities
 app.post("/cities", validateCityData, validacionJWT, createCity); // 
 app.get("/cities/:cityId", validacionJWT, getCity); // 
-app.get("/countries/:countryId/cities", validacionJWT, getCities); // 
+app.get("/cities", validacionJWT, getCities); // 
+app.get("/countries/:countryId/cities", validacionJWT, getCitiesByCountry); // 
 app.patch("/cities/:cityId", validacionJWTAdmin, updateCity); // 
 
 

@@ -2,11 +2,11 @@ export interface Company {
     
     id: number;
     name: string;
-    Country: Country;
+    City: City;
     address: string;
 }
 
-export interface Country {
+export interface City {
     
     name: string;
 }

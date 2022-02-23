@@ -6,10 +6,10 @@
             <label for="name">Nombre</label>
         </div>
         <div class="form-floating">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="country">
-              <option *ngFor="let country of countries; index as i" [value]="country.id"> {{country.name}} </option>
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="city">
+              <option *ngFor="let city of cities; index as i" [value]="city.id"> {{city.name}} </option>
             </select>
-            <label for="floatingSelect">País</label>
+            <label for="floatingSelect">Ciudad</label>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" formControlName="address" id="address" placeholder="#3253">
@@ -24,13 +24,13 @@
     <div class="tb d-flex flex-column">
         <div class="header d-flex">
             <div class="th">Nombre</div>
-            <div class="th">País</div>
+            <div class="th">Ciudad</div>
             <div class="th">Dirección</div>
             <div class="th">Acciones</div>
         </div>
         <div *ngFor="let company of companies; index as i" class="data d-flex">
             <div class="rw"> {{company.name}} </div>
-            <div class="rw"> {{company.Country.name}} </div>
+            <div class="rw"> {{company.City.name}} </div>
             <div class="rw"> {{company.address}} </div>
             <div class="rw">Editar | Eliminar</div>
         </div>

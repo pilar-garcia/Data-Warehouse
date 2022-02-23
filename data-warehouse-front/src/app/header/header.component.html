@@ -16,7 +16,7 @@
                     <a class="nav-link" routerLink="/companies" routerLinkActive="active">Compañia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/register" routerLinkActive="active">Usuarios</a>
+                    <a *ngIf="admin" class="nav-link" routerLink="/register" routerLinkActive="active">Usuarios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/region" routerLinkActive="active">Region / Ciudad</a>

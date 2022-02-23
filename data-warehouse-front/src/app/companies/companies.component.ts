@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Country } from '../region-city/country';
+import { City } from '../region-city/city';
 import { RegionsService } from '../region-city/regions.service';
 import { Company } from './company';
 import { CompanyService } from './company.service';
@@ -15,14 +15,14 @@ export class CompaniesComponent implements OnInit {
 
   companies: Company[] = [];
   selectedCountry = '';
-  countries: Country[] = [];
+  cities: City[] = [];
 
   form: FormGroup;
 
   constructor( private formBuilder: FormBuilder, private companyService: CompanyService, private regionService: RegionsService) { 
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      country: ['', Validators.required],
+      city: ['', Validators.required],
       address: ['', Validators.required]
     });
   }
@@ -30,11 +30,11 @@ export class CompaniesComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      country: ['', Validators.required],
+      city: ['', Validators.required],
       address: ['', Validators.required]
     });
     this.getCompanies();
-    this.getCountries();
+    this.getCities();
   }
 
   getCompanies(): void {
@@ -45,10 +45,10 @@ export class CompaniesComponent implements OnInit {
     });
   }
 
-  getCountries(): void {
-    this.regionService.getCountries().then((value: Observable<Country[]>) =>{
-      value.subscribe((countries: Country[]) =>{
-          this.countries = countries;
+  getCities(): void {
+    this.regionService.getCities().then((value: Observable<City[]>) =>{
+      value.subscribe((cities: City[]) =>{
+          this.cities = cities;
       });
     });
   }
@@ -58,9 +58,8 @@ export class CompaniesComponent implements OnInit {
   }
 
   addCompany(): void {
-    console.log('click');
     if(this.form.valid){
-      this.companyService.postCompany(  this.controls['name'].value, this.controls['address'].value, this.controls['country'].value ).then((value:Observable<Company>) =>{
+      this.companyService.postCompany(  this.controls['name'].value, this.controls['address'].value, this.controls['city'].value ).then((value:Observable<Company>) =>{
         value.subscribe(result =>{
           this.form.reset();
           this.getCompanies();

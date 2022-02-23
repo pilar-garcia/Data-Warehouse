@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   userName = '';
   logged = false;
+  admin = false;
 
   constructor( private router: Router, private loginService: LoginService) {
   }
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.loginService.user.subscribe(user =>{
         this.userName = user.data;
+        this.admin = user.admin;
         if(user.data === ''){
           this.logged = false;
           this.userName = '';

@@ -11,7 +11,7 @@ import { HandleError, HttpErrorHandler } from '../http-error-handler.service';
 })
 export class LoginService {
 
-  user: BehaviorSubject<Login> = new BehaviorSubject({data: '', token: ''});
+  user: BehaviorSubject<Login> = new BehaviorSubject({admin: false, data: '', token: ''});
   private handleError: HandleError;
 
   constructor(private http: HttpClient,
@@ -20,7 +20,7 @@ export class LoginService {
   }
 
   logout(){
-    this.user.next({data: '', token: ''});
+    this.user.next({data: '', token: '', admin: false});
   }
 
   login(user: User){

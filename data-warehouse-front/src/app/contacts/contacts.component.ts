@@ -78,7 +78,6 @@ export class ContactsComponent implements OnInit {
      private sanitizer: DomSanitizer,
      private companyService: CompanyService) {
     this.countries$ = service.countries$;
-    console.log(service.countries$);
     this.total$ = service.total$;
     this.sortedElement = '';
     this.sortedDirection = '';
