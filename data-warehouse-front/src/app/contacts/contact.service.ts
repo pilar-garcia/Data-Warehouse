@@ -38,8 +38,8 @@ function sort(countries: Contact[], column: SortColumn, direction: string): Cont
 function matches(country: Contact, term: string, pipe: PipeTransform) {
   return country.name.toLowerCase().includes(term.toLowerCase())
     || pipe.transform(country.lastName).includes(term)
-    || pipe.transform(country.Company).includes(term)
-    || pipe.transform(country.City).includes(term)
+    || pipe.transform(country.Company.name).includes(term)
+    || pipe.transform(country.City.name).includes(term)
     || pipe.transform(country.position).includes(term)
     || pipe.transform(country.email).includes(term);
 }
