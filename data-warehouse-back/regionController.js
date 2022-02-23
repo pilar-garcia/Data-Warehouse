@@ -20,7 +20,7 @@ module.exports = {
         try {
             let regionId = req.params.regionId;
             
-            sequelize.models.region.findOne({ where: { id: regionId } }).then((region) => {
+            sequelize.models.Region.findOne({ where: { id: regionId } }).then((region) => {
               res.status(200).json(region);
             }).catch((error)=>{
               res.status(400).json(error);
@@ -33,7 +33,7 @@ module.exports = {
     },
     getRegions: (req, res) => {
         try {
-            sequelize.models.region.findAll().then((regions) => {
+            sequelize.models.Region.findAll().then((regions) => {
                 res.status(200).json(regions);
             }).catch((error)=>{
                 res.status(400).json(error);
@@ -49,7 +49,7 @@ module.exports = {
             let regionId = req.params.regionId;
             let regionToUpdate = req.body;
             
-            sequelize.models.region.findByPk(regionId).then((region) => {
+            sequelize.models.Region.findByPk(regionId).then((region) => {
                 region.name = regionToUpdate.name;
                 region.price = regionToUpdate.price;
                 region.imgUrl = regionToUpdate.imgUrl;
@@ -77,7 +77,7 @@ module.exports = {
         try {
             let regionId = req.params.regionId;
            
-            sequelize.models.region.findByPk(regionId).then((region) => {
+            sequelize.models.Region.findByPk(regionId).then((region) => {
               
                 // delete la orden
                 region.status = 'INACTIVE';

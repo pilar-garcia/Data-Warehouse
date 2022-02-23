@@ -12,8 +12,8 @@ const {
   } = require("./middlewares");
   const { createUser, login, getUser } = require("./userController");
   const { createRegion, getRegion, getRegions, updateRegion, deleteRegion } = require("./RegionController");
-  const { createCountry, getCountry, updateCountry} = require("./CountryController");
-  const { createCity, getCity, updateCity} = require("./CityController");
+  const { createCountry, getCountry, updateCountry, getCountries} = require("./CountryController");
+  const { createCity, getCity, updateCity, getCities} = require("./CityController");
   
   app.use(express.json());
   app.use(cors());
@@ -42,17 +42,19 @@ app.get("/regions/:regionId", validacionJWT, getRegion); // GET Region
 app.get("/regions", validacionJWT, getRegions); // List Regions
 app.patch("/regions/:regionId", validacionJWTAdmin, updateRegion); // UPDATE Region
 // Country
-app.post("/countries", validateCountryData, validacionJWT, createCountry); // CREATE ORDER
-app.get("/countries/:countryId", validacionJWT, getCountry); // GET ORDER
-app.patch("/countries/:countryId", validacionJWTAdmin, updateCountry); // UPDATE ORDER
+app.post("/countries", validateCountryData, validacionJWT, createCountry); // 
+app.get("/countries/:countryId", validacionJWT, getCountry); // 
+app.get("/regions/:regionId/countries", validacionJWT, getCountries); // 
+app.patch("/countries/:countryId", validacionJWTAdmin, updateCountry); // 
 // Cities
-app.post("/cities", validateCityData, validacionJWT, createCity); // CREATE ORDER
-app.get("/cities/:cityId", validacionJWT, getCity); // GET ORDER
-app.patch("/cities/:cityId", validacionJWTAdmin, updateCity); // UPDATE ORDER
+app.post("/cities", validateCityData, validacionJWT, createCity); // 
+app.get("/cities/:cityId", validacionJWT, getCity); // 
+app.get("/countries/:countryId/cities", validacionJWT, getCities); // 
+app.patch("/cities/:cityId", validacionJWTAdmin, updateCity); // 
 
 /*
 // COMPANIES
-app.post("/companies", validateOrderData, validacionJWT, createOrder); // CREATE ORDER
-app.get("/companies/:companyId", validacionJWT, getOrder); // GET ORDER
-app.patch("/companies/:companyId", validacionJWTAdmin, updateOrder); // UPDATE ORDER
+app.post("/companies", validateOrderData, validacionJWT, createOrder); // 
+app.get("/companies/:companyId", validacionJWT, getOrder); // 
+app.patch("/companies/:companyId", validacionJWTAdmin, updateOrder); // 
 */

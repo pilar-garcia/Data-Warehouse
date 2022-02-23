@@ -18,7 +18,7 @@ module.exports = {
     },
     getCountry: (req, res) => {
         try {
-            let countryId = req.params.CountryId;
+            let countryId = req.params.countryId;
             
             sequelize.models.Country.findOne({ where: { id: countryId } }).then((country) => {
               res.status(200).json(country);
@@ -33,7 +33,8 @@ module.exports = {
     },
     getCountries: (req, res) => {
         try {
-            sequelize.models.Country.findAll().then((countries) => {
+            let regionId = req.params.regionId;
+            sequelize.models.Country.findAll({ where: { regionId: regionId } }).then((countries) => {
                 res.status(200).json(countries);
             }).catch((error)=>{
                 res.status(400).json(error);
@@ -46,17 +47,17 @@ module.exports = {
     },
     updateCountry: (req, res) => {
         try {
-            let CountryId = req.params.CountryId;
-            let CountryToUpdate = req.body;
+            let countryId = req.params.countryId;
+            let countryToUpdate = req.body;
             
-            sequelize.models.Country.findByPk(CountryId).then((Country) => {
-                Country.name = CountryToUpdate.name;
-                Country.price = CountryToUpdate.price;
-                Country.imgUrl = CountryToUpdate.imgUrl;
+            sequelize.models.Country.findByPk(countryId).then((country) => {
+                country.name = countryToUpdate.name;
+                country.price = countryToUpdate.price;
+                country.imgUrl = countryToUpdate.imgUrl;
              
 
               // actualiza Country
-              Country.save().then((updatedCountry) => {
+              country.save().then((updatedCountry) => {
                 
                 res.status(200).json(updatedCountry);
                 }).catch((error)=>{
