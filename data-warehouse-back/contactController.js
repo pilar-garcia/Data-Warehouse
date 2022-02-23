@@ -7,7 +7,7 @@ module.exports = {
             let channels = contactToSave.channels;
             const contact =  sequelize.models.Contact.build(
                 { name: contactToSave.name, lastName: contactToSave.lastName, position: contactToSave.position,
-                     address: contactToSave.address, cityId: contactToSave.cityId, 
+                     address: contactToSave.address, cityId: contactToSave.cityId, email: contactToSave.email,
                      interes: contactToSave.interes, companyId: contactToSave.companyId });
             contact.save().then((contactSaved) => {
                 let promisesItem = [];

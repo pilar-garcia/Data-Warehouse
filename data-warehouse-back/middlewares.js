@@ -32,7 +32,7 @@ module.exports = {
     }
   },
   validateContactData: (req, res, next) => {
-    if (req.body.name && req.body.lastName && req.body.address && req.body.position && req.body.cityId  && req.body.companyId && req.body.interes && req.body.channels ) {
+    if (req.body.name && req.body.lastName && req.body.address && req.body.email && req.body.position && req.body.cityId  && req.body.companyId && req.body.interes && req.body.channels ) {
       next();
     } else {
       res.status(400).json({"msj":"All fields are required"});
