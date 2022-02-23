@@ -7,6 +7,7 @@ import {COUNTRIES} from './contacts';
 import {LowerCasePipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import {SortColumn, SortDirection} from './sortable.directive';
+import { ContactApiService } from './contact-api.service';
 
 interface SearchResult {
   countries: Contact[];
@@ -37,8 +38,8 @@ function sort(countries: Contact[], column: SortColumn, direction: string): Cont
 function matches(country: Contact, term: string, pipe: PipeTransform) {
   return country.name.toLowerCase().includes(term.toLowerCase())
     || pipe.transform(country.lastName).includes(term)
-    || pipe.transform(country.company).includes(term)
-    || pipe.transform(country.city).includes(term)
+    || pipe.transform(country.Company).includes(term)
+    || pipe.transform(country.City).includes(term)
     || pipe.transform(country.position).includes(term)
     || pipe.transform(country.email).includes(term);
 }
@@ -49,6 +50,7 @@ export class CountryService {
   private _search$ = new Subject<void>();
   private _countries$ = new BehaviorSubject<Contact[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
+  private contacs: Contact[] = [];
 
   private _state: State = {
     page: 1,
@@ -58,19 +60,28 @@ export class CountryService {
     sortDirection: ''
   };
 
-  constructor(private pipe: LowerCasePipe) {
-    this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(200),
-      switchMap(() => this._search()),
-      delay(200),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      this._countries$.next(result.countries);
-      this._total$.next(result.total);
-    });
+  constructor(private pipe: LowerCasePipe, private contactApi: ContactApiService) {
+    this.init();
+  }
 
-    this._search$.next();
+  init(){
+    this.contactApi.getContacts().then((value: Observable<Contact[]>) =>{
+      value.subscribe((contacts: Contact[]) =>{
+        this.contacs = contacts;
+      });
+      this._search$.pipe(
+        tap(() => this._loading$.next(true)),
+        debounceTime(200),
+        switchMap(() => this._search()),
+        delay(200),
+        tap(() => this._loading$.next(false))
+      ).subscribe(result => {
+        this._countries$.next(result.countries);
+        this._total$.next(result.total);
+      });
+  
+      this._search$.next();
+    });
   }
 
   get countries$() { return this._countries$.asObservable(); }
@@ -95,7 +106,7 @@ export class CountryService {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
 
     // 1. sort
-    let countries = sort(COUNTRIES, sortColumn, sortDirection);
+    let countries = sort(this.contacs, sortColumn, sortDirection);
 
     // 2. filter
     countries = countries.filter(country => matches(country, searchTerm, this.pipe));
@@ -106,5 +117,4 @@ export class CountryService {
     return of({countries, total});
   }
 
-  
 }

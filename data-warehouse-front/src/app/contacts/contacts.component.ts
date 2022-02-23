@@ -75,6 +75,7 @@ export class ContactsComponent implements OnInit {
      private regionService: RegionsService, private contactApi: ContactApiService,
      private companyService: CompanyService) {
     this.countries$ = service.countries$;
+    console.log(service.countries$);
     this.total$ = service.total$;
     this.sortedElement = '';
     this.sortedDirection = '';
@@ -116,6 +117,7 @@ export class ContactsComponent implements OnInit {
     });
     this.getRegions();
     this.getCompanies();
+    this.getContacts();
     this.controls['region'].valueChanges.subscribe(val => {
       this.openRegion(val);
     });
@@ -237,7 +239,7 @@ export class ContactsComponent implements OnInit {
   }
 
   getContacts(){
-    
+    this.service.init();
   }
 
   getCompanies(): void {

@@ -59,7 +59,8 @@ module.exports = {
     },
     getContacts: (req, res) => {
         try {
-            sequelize.models.Contact.findAll({include: [ { model: sequelize.models.Country, as: 'Country' } ]}).then((Contacts) => {
+            sequelize.models.Contact.findAll({include: [ {model: sequelize.models.City}, {
+                model: sequelize.models.Channel}, {model: sequelize.models.Company} ]}).then((Contacts) => {
                 res.status(200).json(Contacts);
             }).catch((error)=>{
                 res.status(400).json(error);

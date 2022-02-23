@@ -9,8 +9,8 @@ export interface Contact {
     cityId: number;
     interes: string;
     companyId: number;
-    company: Field,
-    city: Field,
+    Company: Field,
+    City: Field,
     channels: Channel[];
     checked: boolean;
   }
