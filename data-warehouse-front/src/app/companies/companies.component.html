@@ -5,9 +5,11 @@
             <input type="text" class="form-control" formControlName="name" id="name" placeholder="name">
             <label for="name">Nombre</label>
         </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="country" id="country" placeholder="Colombia">
-            <label for="country">País</label>
+        <div class="form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="country">
+              <option *ngFor="let country of countries; index as i" [value]="country.id"> {{country.name}} </option>
+            </select>
+            <label for="floatingSelect">País</label>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" formControlName="address" id="address" placeholder="#3253">

@@ -27,4 +27,23 @@ export class CompanyService {
       });     
     });
   }
+
+  postCompany(name: string, address: string, countryId: number){
+
+    return new Promise<Observable<Company>>(resolve=>{
+      this.loginService.user.pipe(
+        take(1) //useful if you need the data once and don't want to manually cancel the subscription again
+      ).subscribe(user =>{
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            Authorization: user.token
+          })
+        };
+        resolve(this.http.post<Company>('http://127.0.0.1:3000/companies', {name: name, countryId: countryId, address: address },httpOptions));
+      });     
+    });
+    
+  }
+
 }

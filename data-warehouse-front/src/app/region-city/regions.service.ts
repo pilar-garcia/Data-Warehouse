@@ -101,6 +101,22 @@ export class RegionsService {
     });
   }
 
+  
+  getCountries(){
+    return new Promise<Observable<Country[]>>(resolve=>{
+      this.loginService.user.pipe(
+        take(1) //useful if you need the data once and don't want to manually cancel the subscription again
+      ).subscribe(user =>{
+        const httpOptions = {
+          headers: new HttpHeaders({
+            Authorization: user.token
+          })
+        };
+        resolve(this.http.get<Country[]>('http://127.0.0.1:3000/countries',httpOptions));
+      });     
+    });
+  }
+
   getCitiesByCountry(countryId: number){
     return new Promise<Observable<City[]>>(resolve=>{
       this.loginService.user.pipe(
