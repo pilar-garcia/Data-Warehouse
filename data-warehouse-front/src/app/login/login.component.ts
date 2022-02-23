@@ -36,11 +36,12 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if(this.controls != null && this.form?.valid){
-      this.loginService.login({email: this.controls['username'].value, password: this.controls['password'].value});
-      this.controls['username'].setValue('');
-      this.controls['password'].setValue('');
-      this.router.navigateByUrl('/contacts', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['contacts']);
+      this.loginService.login({email: this.controls['username'].value, password: this.controls['password'].value}).then(value =>{
+        this.controls['username'].setValue('');
+        this.controls['password'].setValue('');
+        this.router.navigateByUrl('/contacts', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['contacts']);
+        });
     });
     }
   }

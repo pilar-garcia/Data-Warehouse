@@ -27,7 +27,7 @@
     </section>
 
     <app-popup [title]="'Agregar contacto'" [display]="displayNewContact" (popupClose)="onCloseHandled('newContact')">
-      <form class="flex-form"> 
+      <form class="flex-form" [formGroup]="formContact"> 
         <div class="input-group">
           <ngp-image-picker [_config]="imagePickerConf" ($imageChanged)="onImageChange($event)"></ngp-image-picker>
         </div>
@@ -55,16 +55,24 @@
         </div>
         <div class="input-group">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputRegion" placeholder="Bogota">
-            <label for="inputRegion">Región</label>
+            <select class="form-select mb-3" id="region" aria-label="Floating label select example" formControlName="region">
+              <option *ngFor="let region of regions; index as i" [value]="region.id"> {{region.name}} </option>
+            </select>
+            <label for="floatingSelect">Región</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputCountry" placeholder="Colombia">
-            <label for="inputCountry">País</label>
+            <select class="form-select mb-3" id="country" name="country" aria-label="Floating label select example" formControlName="country">
+              <option [value]="" > seleccione </option>
+              <option *ngFor="let country of selectedRegion.countries; index as i" [value]="country.id"> {{country.name}} </option>
+            </select>
+            <label  for="floatingSelect">País</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputCity" placeholder="Armenia">
-            <label for="inputCity">Ciudad</label>
+            <select class="form-select mb-3" id="city" name="city" aria-label="Floating label select example" formControlName="city">
+              <option [value]="" > seleccione </option>
+              <option *ngFor="let city of selectedCountry.cities; index as i" [value]="city.id"> {{city.name}} </option>
+            </select>
+            <label  for="floatingSelect">Ciudad</label>
           </div>
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="inputAddress" placeholder="alguna Dirección">

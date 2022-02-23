@@ -22,6 +22,7 @@ export class RegionsService {
       this.loginService.user.pipe(
         take(1) //useful if you need the data once and don't want to manually cancel the subscription again
       ).subscribe(user =>{
+        console.log("llamo a regions", user);
         const httpOptions = {
           headers: new HttpHeaders({
             Authorization: user.token
