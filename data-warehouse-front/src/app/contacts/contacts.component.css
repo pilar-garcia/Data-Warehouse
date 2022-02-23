@@ -41,3 +41,9 @@ button{
     display: flex;
     align-items: self-start;
 }
+
+.channel{
+    background-color: #86b7fe;
+    color: aliceblue;
+    text-align: center;
+}

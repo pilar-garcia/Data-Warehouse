@@ -2,9 +2,9 @@ import {Injectable, PipeTransform} from '@angular/core';
 
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
-import {Contact} from './contact';
+import {Channel, Contact} from './contact';
 import {COUNTRIES} from './contacts';
-import {DecimalPipe} from '@angular/common';
+import {LowerCasePipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import {SortColumn, SortDirection} from './sortable.directive';
 
@@ -21,7 +21,7 @@ interface State {
   sortDirection: SortDirection;
 }
 
-const compare = (v1: string | number | boolean, v2: string | number | boolean) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+const compare = (v1: string | number | boolean | Channel[], v2: string | number | boolean | Channel[]) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 function sort(countries: Contact[], column: SortColumn, direction: string): Contact[] {
   if (direction === '' || column === '') {
@@ -36,8 +36,11 @@ function sort(countries: Contact[], column: SortColumn, direction: string): Cont
 
 function matches(country: Contact, term: string, pipe: PipeTransform) {
   return country.name.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(country.area).includes(term)
-    || pipe.transform(country.population).includes(term);
+    || pipe.transform(country.lastname).includes(term)
+    || pipe.transform(country.company).includes(term)
+    || pipe.transform(country.city).includes(term)
+    || pipe.transform(country.position).includes(term)
+    || pipe.transform(country.email).includes(term);
 }
 
 @Injectable({providedIn: 'root'})
@@ -55,7 +58,7 @@ export class CountryService {
     sortDirection: ''
   };
 
-  constructor(private pipe: DecimalPipe) {
+  constructor(private pipe: LowerCasePipe) {
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),

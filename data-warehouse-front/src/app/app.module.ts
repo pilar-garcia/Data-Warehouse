@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { HttpErrorHandler } from './http-error-handler.service';
+import { LowerCasePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { HttpErrorHandler } from './http-error-handler.service';
     NgpImagePickerModule,
     HttpClientModule
   ],
-  providers: [HttpErrorHandler],
+  providers: [HttpErrorHandler, LowerCasePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

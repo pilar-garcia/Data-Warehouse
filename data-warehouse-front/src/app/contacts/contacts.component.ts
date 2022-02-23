@@ -4,7 +4,7 @@ import {DecimalPipe} from '@angular/common';
 import {Component, QueryList, ViewChildren, OnInit} from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import {Contact} from './contact';
+import {Contact, Channel} from './contact';
 import {CountryService} from './contact.service';
 import {NgbdSortableHeader, SortEvent} from './sortable.directive';
 import { ImagePickerConf } from 'ngp-image-picker';
@@ -29,12 +29,16 @@ export class ContactsComponent implements OnInit {
   checkAllContactsModel: boolean;
   displayNewContact = "none";
   displayMoreActions = "none";
+  interes: number = 0;
 
   selectedRegion: Region = {id: 0, name:'', countries: [], opened: false};
   selectedCountry: Country = {id: 0, name:'', cities: [], opened: false};
   
   formContact: FormGroup;
+  
+  formChannel: FormGroup;
   regions: Region[] =[];
+  channels: Channel[] = [];
 
   imagePickerConf: ImagePickerConf = {
     borderRadius: '50%',
@@ -74,6 +78,11 @@ export class ContactsComponent implements OnInit {
       country: ['', Validators.required],
       city: ['', Validators.required]
     });
+    this.formChannel = this.formBuilder.group({
+      channel: ['', Validators.required],
+      userAccount: ['', Validators.required],
+      preference: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
@@ -81,6 +90,11 @@ export class ContactsComponent implements OnInit {
       region: ['', Validators.required],
       country: ['', Validators.required],
       city: ['', Validators.required]
+    });
+    this.formChannel = this.formBuilder.group({
+      channel: ['', Validators.required],
+      userAccount: ['', Validators.required],
+      preference: ['', Validators.required]
     });
     this.getRegions();
     this.controls['region'].valueChanges.subscribe(val => {
@@ -95,6 +109,11 @@ export class ContactsComponent implements OnInit {
   get controls(){
     return this.formContact.controls;
   }
+
+  get channelControls(){
+    return this.formChannel.controls;
+  }
+
 
   getRegions(): void {
     this.regionService.getRegions().then((value: Observable<Region[]>) =>{
@@ -157,4 +176,21 @@ export class ContactsComponent implements OnInit {
     console.log(value);
   }
 
+  addChannel(){
+    if(this.channelControls != null && this.formChannel.valid){
+        this.channels.push({id: this.channels.length+1, 
+          name: this.channelControls['channel'].value,
+           value: this.channelControls['userAccount'].value,
+            preference: this.channelControls['preference'].value });
+            this.formChannel.reset();
+    }
+  }
+
+  changeInteres(){
+    if(this.interes === 100){
+      this.interes = 0;
+    } else {
+      this.interes += 25;
+    }
+  }
 }
