@@ -219,7 +219,7 @@ Contact.init({
       allowNull: false
     },
     photo: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
       allowNull: false
     }
   }, {
