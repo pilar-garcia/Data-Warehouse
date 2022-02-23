@@ -17,8 +17,8 @@ module.exports = {
       res.status(400).json({"msj":"All fields are required"});
     }
   },
-  validateOrderData: (req, res, next) => {
-    if (req.body.total && req.body.paymentMethodId && req.body.items) {
+  validateCountryData: (req, res, next) => {
+    if (req.body.name && req.body.regionId) {
       next();
     } else {
       res.status(400).json({"msj":"All fields are required"});

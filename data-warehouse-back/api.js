@@ -4,12 +4,13 @@ var app = express();
 const {
     validateUserData,
     validateRegionData,
-    validateOrderData,
+    validateCountryData,
     validacionJWT,
     validacionJWTAdmin,
   } = require("./middlewares");
   const { createUser, login, getUser } = require("./userController");
   const { createRegion, getRegion, getRegions, updateRegion, deleteRegion } = require("./RegionController");
+  const { createCountry, getCountry, updateCountry} = require("./CountryController");
   
   app.use(express.json());
   
@@ -36,16 +37,16 @@ app.post("/regions", validateRegionData, validacionJWT, createRegion); // CREATE
 app.get("/regions/:regionId", validacionJWT, getRegion); // GET Region
 app.get("/regions", validacionJWT, getRegions); // List Regions
 app.patch("/regions/:regionId", validacionJWTAdmin, updateRegion); // UPDATE Region
+// Country
+app.post("/countries", validateCountryData, validacionJWT, createCountry); // CREATE ORDER
+app.get("/countries/:countryId", validacionJWT, getCountry); // GET ORDER
+app.patch("/countries/:countryId", validacionJWTAdmin, updateCountry); // UPDATE ORDER
 
 /*
 // COMPANIES
 app.post("/companies", validateOrderData, validacionJWT, createOrder); // CREATE ORDER
 app.get("/companies/:companyId", validacionJWT, getOrder); // GET ORDER
 app.patch("/companies/:companyId", validacionJWTAdmin, updateOrder); // UPDATE ORDER
-// Country
-app.post("/countries", validateOrderData, validacionJWT, createOrder); // CREATE ORDER
-app.get("/countries/:countryId", validacionJWT, getOrder); // GET ORDER
-app.patch("/countries/:countryId", validacionJWTAdmin, updateOrder); // UPDATE ORDER
 // Cities
 app.post("/cities", validateOrderData, validacionJWT, createOrder); // CREATE ORDER
 app.get("/cities/:cityId", validacionJWT, getOrder); // GET ORDER
