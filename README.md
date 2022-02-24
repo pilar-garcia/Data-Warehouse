@@ -35,7 +35,7 @@ node api.js
 nodemon api.js
 npm start
 
-Adiconalmente puedes agregar la siguiente coleccion de postman para visualizar el uso adecuado de cada Enpoint:
+Adiconalmente puedes agregar la siguiente coleccion de postman para visualizar el uso adecuado de cada Endpoint:
 Para agregar la colecion, debes:
 1. ir a la aplicacion de Postman y dar click en File(Archivo).
 2. dar click en import(importar) y seleccionar la tercera pestaña(link).
@@ -43,8 +43,6 @@ Para agregar la colecion, debes:
 https://www.getpostman.com/collections/e74af695931a229422bf
 
 # Inicia el cliente (Frontend)
-
-Desde tu terminal o editor de código(en la consola) y estando en la carpeta data-warehouse-front:
 
 Debes contar con Angular previamente instalado, aqui te la documentacion oficial de como hacerlo:
 https://angular.io/guide/setup-local.
@@ -54,6 +52,8 @@ npm install -g @angular/cli
 
 si estas en windows adicionalmente debes ejecutar la siguiente linea de comando en una terminal de powershell con permisos de administrador:
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+Desde tu terminal o editor de código(en la consola) y estando en la carpeta data-warehouse-front:
 
 ng serve
 
