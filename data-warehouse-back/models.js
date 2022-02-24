@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('mysql://admin:dalilah@localhost:3306/dalilah')
+const sequelize = new Sequelize('mysql://admin:datawarehouse@localhost:3306/datawarehouse')
 
 class City extends Model {}
 
