@@ -37,11 +37,9 @@ export class UsersComponent implements OnInit {
       checkpassword: ['', Validators.required],
       password: ['', Validators.required]});
       this.controls['password'].valueChanges.subscribe(val => {
-        console.log(val);
         this.verifyPass();
       });
       this.controls['checkpassword'].valueChanges.subscribe(val => {
-        console.log(val);
         this.verifyPass();
       });
       this.getUsers();

@@ -29,7 +29,98 @@
     <app-popup [title]="'Agregar contacto'" [display]="displayNewContact" (popupClose)="onCloseHandled('newContact')"  (popupSaved)="saveContact()">
       <form class="flex-form" [formGroup]="formContact"> 
         <div class="input-group">
-          <ngp-image-picker  [_config]="imagePickerConf" ($imageChanged)="onImageChange($event)"></ngp-image-picker>
+          <ngp-image-picker  [_config]="imagePickerConf" [_imageSrc]="photoSelected" ($imageChanged)="onImageChange($event)"></ngp-image-picker>
+        </div>
+        <div class="input-group">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputName" placeholder="Pilar" formControlName="inputName">
+            <label for="inputName">Nombre</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputLastName" placeholder="Garcia" formControlName="inputLastName">
+            <label for="inputLastName">Apellido</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputRole" placeholder="Developer" formControlName="inputRole">
+            <label for="inputRole">Cargo</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="inputEmail" placeholder="pilargarcia@example.com" formControlName="inputEmail">
+            <label for="inputEmail">Email</label>
+          </div>
+          <div class="form-floating mb-3">
+            <select class="form-select mb-3 min-width" id="company" aria-label="Floating label select example" formControlName="inputCompany">
+              <option *ngFor="let company of companies; index as i" [value]="company.id"> {{company.name}} </option>
+            </select>
+            <label for="floatingSelect">Compañía</label>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="form-floating mb-3">
+            <select class="form-select mb-3" id="region" aria-label="Floating label select example" formControlName="region">
+              <option *ngFor="let region of regions; index as i" [value]="region.id"> {{region.name}} </option>
+            </select>
+            <label for="floatingSelect">Región</label>
+          </div>
+          <div class="form-floating mb-3">
+            <select class="form-select mb-3" id="country" name="country" aria-label="Floating label select example" formControlName="country">
+              <option [value]="" > seleccione </option>
+              <option *ngFor="let country of selectedRegion.countries; index as i" [value]="country.id"> {{country.name}} </option>
+            </select>
+            <label  for="floatingSelect">País</label>
+          </div>
+          <div class="form-floating mb-3">
+            <select class="form-select mb-3" id="city" name="city" aria-label="Floating label select example" formControlName="city">
+              <option [value]="" > seleccione </option>
+              <option *ngFor="let city of selectedCountry.cities; index as i" [value]="city.id"> {{city.name}} </option>
+            </select>
+            <label  for="floatingSelect">Ciudad</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputAddress" placeholder="alguna Dirección" formControlName="address">
+            <label for="inputAddress">Dirección</label>
+          </div>
+          <div class="mb-3">
+            <label for="interes" class="form-label">Interés</label>
+            <div class="form-control progress-bar-container"><ngb-progressbar class="progress-bar" (click)="changeInteres()"  type="success" textType="white" [value]="interes" [showValue]="true"></ngb-progressbar></div>
+          </div>  
+        </div>
+        <div [formGroup]="formChannel" class="input-group row g-2 d-flex justify-content-between">
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" formControlName="channel">
+                  <option selected>Seleccione</option>
+                  <option value="whatsapp">Whatsapp</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="email">Email</option>
+                </select>
+                <label for="floatingSelectGrid">Canal de contacto</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="inputUserAccount" placeholder="12435" formControlName="userAccount">
+                <label for="inputUserAccount">Cuenta de usuario</label>
+              </div>
+              <div class="form-floating">
+                <select class="form-select" id="inputPreferences" aria-label="Floating label select example" formControlName="preference">
+                  <option selected>Seleccione</option>
+                  <option value="1">No molestar</option>
+                  <option value="2">Canal Preferido</option>
+                </select>
+                <label for="inputPreferences">Preferencias</label>
+              </div>
+              <button type="button" class="btn btn-outline-primary" (click)="addChannel()">
+                 Agregar Canal
+              </button>
+              <div >
+                  <h6 class="channel" *ngFor="let channel of channels"> {{channel.name}} </h6>
+              </div>
+            </div>
+      </form>
+    </app-popup>
+
+    <app-popup [title]="'Editar contacto'" [display]="displayEditContact" (popupClose)="onCloseHandled('editContact')"  (popupSaved)="patchContact()">
+      <form class="flex-form" [formGroup]="formContact"> 
+        <div class="input-group">
+          <ngp-image-picker  [_config]="imagePickerConf" [_imageSrc]="photoSelected" ($imageChanged)="onImageChange($event)"></ngp-image-picker>
         </div>
         <div class="input-group">
           <div class="form-floating mb-3">
@@ -122,7 +213,7 @@
         <button type="button" class="btn btn-outline-primary">
           <i class="bi bi-trash"></i> Eliminar
         </button>
-        <button type="button" class="btn btn-outline-primary">
+        <button type="button" class="btn btn-outline-primary" (click)="editContact()" >
           <i class="bi bi-pencil"></i> Editar
         </button>
       </div>
@@ -170,7 +261,7 @@
         <td><ngb-highlight [result]="country.City.name | titlecase" [term]="service.searchTerm"></ngb-highlight></td>
         <td><ngb-highlight [result]="country.Company.name | titlecase" [term]="service.searchTerm"></ngb-highlight></td>
         <td><ngb-highlight [result]="country.position| titlecase" [term]="service.searchTerm"></ngb-highlight></td>
-        <td class="action-item" (click)="showMoreActions()"><ngb-highlight [result]="'...'"></ngb-highlight></td>
+        <td class="action-item" (click)="showMoreActions(country)"><ngb-highlight [result]="'...'"></ngb-highlight></td>
       </tr>
       </tbody>
     </table>

@@ -28,6 +28,23 @@ export class ContactApiService {
       });
       
     }
+
+    patchContact(contactModel: any){
+      return new Promise<Observable<Contact>>(resolve=>{
+        this.loginService.user.pipe(
+          take(1) //useful if you need the data once and don't want to manually cancel the subscription again
+        ).subscribe(user =>{
+          const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json',
+              Authorization: user.token
+            })
+          };
+          resolve(this.http.patch<Contact>('http://127.0.0.1:3000/contacts/'+contactModel.id, contactModel,httpOptions));
+        });     
+      });
+      
+    }
     
     getContacts() {
       return new Promise<Observable<Contact[]>>(resolve=>{

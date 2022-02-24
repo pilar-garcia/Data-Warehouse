@@ -33,8 +33,11 @@ export class ContactsComponent implements OnInit {
   checkAllContactsModel: boolean;
   displayNewContact = "none";
   displayMoreActions = "none";
+  displayEditContact = "none";
   interes: number = 0;
   companies: Company[] = [];
+  selectedContact: any;
+  photoSelected: any;
   photo: any;
 
   selectedRegion: Region = {id: 0, name:'', countries: [], opened: false};
@@ -58,16 +61,42 @@ export class ContactsComponent implements OnInit {
   }
 
   onCloseHandled(display: string) {
-    if(display === 'newContact'){
-      this.displayNewContact = "none";
-    }
-    if(display === 'moreActions'){
-      this.displayMoreActions = "none";
-    }
+    this.displayNewContact = "none";
+    
+    this.displayMoreActions = "none";
+    
+    this.displayEditContact = "none";
+    this.formContact.reset();
+    this.interes = 0;
+    this.channels = [];
+    this.interes = 0;
+    this.photo = '';
+    this.photoSelected = null;
+    this.getContacts();
   }
 
-  showMoreActions(){
+  showMoreActions(contact: Contact){
+    this.selectedContact = contact;
     this.displayMoreActions = 'flex';
+  }
+
+  editContact(){
+    this.displayMoreActions = 'none';
+    this.displayEditContact = 'flex';
+    this.photoSelected = this.selectedContact.photo;
+    this.photo = this.selectedContact.photo;
+    this.setControlValue('inputName', this.selectedContact.name);
+    this.setControlValue('inputLastName', this.selectedContact.lastName);
+    this.setControlValue('address', this.selectedContact.address);
+    this.setControlValue('inputRole', this.selectedContact.position);
+    this.setControlValue('inputEmail', this.selectedContact.email);
+    this.setControlValue('inputCompany', this.selectedContact.companyId);
+    this.channels = this.selectedContact.Channels;
+    this.interes = this.selectedContact.interes;
+  }
+
+  setControlValue(controlName: string, value: any){
+    this.controls[controlName].setValue(value);
   }
 
 
@@ -217,8 +246,38 @@ export class ContactsComponent implements OnInit {
   }
 
   saveContact(){
+    
+    if(this.controls != null && this.formContact.valid){
+      
+        let contact = {
+          name: this.controls['inputName'].value,
+          lastName: this.controls['inputLastName'].value,
+          email: this.controls['inputEmail'].value,
+          position: this.controls['inputRole'].value,
+          address: this.controls['address'].value,
+          cityId: this.controls['city'].value,
+          companyId: this.controls['inputCompany'].value,
+          interes: this.interes+'', 
+          channels: this.channels,
+          photo: this.photo    
+        }
+        this.contactApi.postContact(contact).then(value => {
+          value.subscribe(contact =>{
+            this.formContact.reset();
+            this.interes = 0;
+            this.channels = [];
+            this.interes = 0;
+            this.photo = '';
+            this.getContacts();
+          });
+        });
+    }
+  }
+
+  patchContact(){
     if(this.controls != null && this.formContact.valid){
       let contact = {
+        id: this.selectedContact.id,
         name: this.controls['inputName'].value,
         lastName: this.controls['inputLastName'].value,
         email: this.controls['inputEmail'].value,
@@ -230,14 +289,26 @@ export class ContactsComponent implements OnInit {
         channels: this.channels,
         photo: this.photo    
       }
-      this.contactApi.postContact(contact).then(value => {
+      this.contactApi.patchContact(contact).then(value => {
         value.subscribe(contact =>{
           this.formContact.reset();
           this.interes = 0;
           this.channels = [];
+          this.selectedContact = null;
+          this.photoSelected = null;
+          
+          this.displayEditContact = 'none';
           this.getContacts();
         });
       });
+      this.formContact.reset();
+          this.interes = 0;
+          this.channels = [];
+          this.selectedContact = null;
+          this.photoSelected = null;
+          
+          this.displayEditContact = 'none';
+          this.getContacts();
     }
   }
 

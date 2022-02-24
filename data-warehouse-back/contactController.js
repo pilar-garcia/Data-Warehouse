@@ -74,7 +74,8 @@ module.exports = {
     },
     updateContact: (req, res) => {
         try {
-            let contactId = req.params.ContactId;
+            console.log('update contact')
+            let contactId = req.params.contactId;
             let contactToUpdate = req.body;
             
             sequelize.models.Contact.findByPk(contactId).then((contact) => {
@@ -93,7 +94,7 @@ module.exports = {
                 //product plus others product  result the sum of amounts by price and total
                 contactToUpdate.channels.forEach(itemToSave => {
                     let promiseItem = new Promise((resolve, reject) => {
-                            sequelize.models.Item.findOrCreate({
+                            sequelize.models.Channel.findOrCreate({
                                 where: { contactId: contactToUpdate.id, name: itemToSave.name },
                                 defaults: {
                                   contactId: contactToUpdate.id,
