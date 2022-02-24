@@ -1,4 +1,4 @@
-# Proyect-Delilah-Resto
+# Proyect-Data-WareHouse (Modo Freelance)
 
 # Objetivo:
 Generar una herramienta que permita a una compañía de Marketing administrar todos los contactos de sus clientes para sus campañas.
